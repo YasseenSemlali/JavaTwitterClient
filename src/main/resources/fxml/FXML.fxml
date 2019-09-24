@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="400.0" prefWidth="158.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="timeline" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Timeline" />
+            <Button id="test2" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="test2" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: -20 0 0 0; -fx-tab-max-height: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Timeline">
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="72.0" layoutY="111.0" text="test2" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
