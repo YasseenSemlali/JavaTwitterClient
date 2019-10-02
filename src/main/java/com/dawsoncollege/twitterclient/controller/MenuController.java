@@ -14,32 +14,29 @@ import javafx.scene.control.TabPane;
 public class MenuController {
     private TabPane mainContent;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+      @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="homeBtn"
-    private Button homeBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="mentionsBtn"
-    private Button mentionsBtn; // Value injected by FXMLLoader
-
     @FXML
-    void onHomeClick(ActionEvent event) {
+    void onFeedClick(ActionEvent event) {
         mainContent.getSelectionModel().select(0);
     }
 
     @FXML
-    void onMentionsClick(ActionEvent event) {
+    void onMessageClick(ActionEvent event) {
         mainContent.getSelectionModel().select(1);
+    }
+
+    @FXML
+    void onSearchClick(ActionEvent event) {
+        mainContent.getSelectionModel().select(2);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert homeBtn != null : "fx:id=\"homeBtn\" was not injected: check your FXML file 'Menu.fxml'.";
-        assert mentionsBtn != null : "fx:id=\"mentionsBtn\" was not injected: check your FXML file 'Menu.fxml'.";
 
     }
 
