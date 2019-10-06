@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -40,6 +41,9 @@ public class AuthenticateController {
     @FXML // fx:id="accessKeyTxt"
     private TextField accessKeyTxt; // Value injected by FXMLLoader
   
+    @FXML // fx:id="errorMsgTxt"
+    private Label errorMsgTxt; // Value injected by FXMLLoader
+    
     @FXML // fx:id="okBtn"
     private Button okBtn; // Value injected by FXMLLoader
 
@@ -47,7 +51,6 @@ public class AuthenticateController {
      * @param event
      */
     @FXML
-    
     void createProperties(ActionEvent event) {
         String consumerKey = consumerKeyTxt.getText();
         String consumerSecretKey = consumerSecretKeyTxt.getText();
@@ -71,21 +74,23 @@ public class AuthenticateController {
                prop.store(propFileStream, "Twitter Properties");
                Stage stage = (Stage) okBtn.getScene().getWindow();
                stage.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
+            }  catch (IOException ex) {
+                this.errorMsgTxt.setText("Could not write twitter4j.properties file");
+                Logger.getLogger(AuthenticateController.class.getName()).log(Level.WARNING, null, ex);
             }
             
+        } else {
+            this.errorMsgTxt.setText("Please fill out all fields");
         }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-          assert consumerKeyTxt != null : "fx:id=\"consumerKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
+         assert consumerKeyTxt != null : "fx:id=\"consumerKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert consumerSecretKeyTxt != null : "fx:id=\"consumerSecretKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
-        assert accessSecretKeyTxt != null : "fx:id=\"accessSecretKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert accessKeyTxt != null : "fx:id=\"accessKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
+        assert accessSecretKeyTxt != null : "fx:id=\"accessSecretKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
+        assert errorMsgTxt != null : "fx:id=\"errorMsgTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert okBtn != null : "fx:id=\"okBtn\" was not injected: check your FXML file 'Authenticate.fxml'.";
 
     }

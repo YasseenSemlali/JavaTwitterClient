@@ -22,15 +22,18 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="consumerKeyTxt" GridPane.columnIndex="1" />
       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" text="%consumer_key" />
-      <TextField fx:id="consumerSecretKeyTxt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="consumerKeyTxt" GridPane.columnIndex="1" />
       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" text="%consumer_secret_key" GridPane.rowIndex="1" />
+      <TextField fx:id="consumerSecretKeyTxt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" text="%access_token" GridPane.rowIndex="2" />
-      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" text="$access_secret_token" GridPane.rowIndex="3" />
-      <TextField fx:id="accessSecretKeyTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <TextField fx:id="accessKeyTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="okBtn" mnemonicParsing="false" onAction="#createProperties" prefHeight="25.0" prefWidth="108.0" text="$ok" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" text="%access_secret_token" GridPane.rowIndex="3" />
+      <TextField fx:id="accessSecretKeyTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+      <Label fx:id="errorMsgTxt" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="225.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      
+      <Button fx:id="okBtn" mnemonicParsing="false" onAction="#createProperties" prefHeight="25.0" prefWidth="108.0" text="%ok" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
    </children>
    <opaqueInsets>
       <Insets />
