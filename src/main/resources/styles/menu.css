@@ -5,3 +5,35 @@
 .mainFxmlClass {
 
 }
+
+VBox {
+    
+  -fx-background-color: white;
+}
+
+Button {
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-background-color: white;
+  -fx-background-size: cover;
+}
+
+Button:hover {
+  -fx-background-color: grey;
+}
+
+#feed {
+  -fx-background-image: url("../Images/house.png");
+}
+
+#search{
+  -fx-background-image: url("../Images/search.png");
+}
+
+#message{
+  -fx-background-image: url("../Images/envelope.png");
+}
+
+#profile {
+  -fx-background-image: url("../Images/avatar.png");
+}

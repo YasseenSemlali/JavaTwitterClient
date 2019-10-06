@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'Menu.fxml' Controller Class
- */
-
 package com.dawsoncollege.twitterclient.controller;
 
 import java.net.URL;
@@ -22,17 +18,22 @@ public class MenuController {
 
     @FXML
     void onFeedClick(ActionEvent event) {
-        mainContent.getSelectionModel().select(0);
+        mainContent.getSelectionModel().select(TwitterRootController.FEED_INDEX);
     }
 
     @FXML
     void onMessageClick(ActionEvent event) {
-        mainContent.getSelectionModel().select(1);
+        mainContent.getSelectionModel().select(TwitterRootController.DM_INDEX);
     }
 
     @FXML
     void onSearchClick(ActionEvent event) {
-        mainContent.getSelectionModel().select(2);
+        mainContent.getSelectionModel().select(TwitterRootController.SEARCH_INDEX);
+    }
+
+    @FXML
+    void onProfileClick(ActionEvent event) {
+        mainContent.getSelectionModel().select(TwitterRootController.PROFILE_INDEX);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

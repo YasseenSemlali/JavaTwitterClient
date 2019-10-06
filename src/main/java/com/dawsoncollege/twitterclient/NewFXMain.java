@@ -5,32 +5,25 @@ import com.dawsoncollege.twitterclient.controller.AuthenticateController;
 import com.dawsoncollege.twitterclient.controller.TwitterRootController;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+
 import org.slf4j.LoggerFactory;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 
 /**
  *
@@ -38,6 +31,7 @@ import twitter4j.TwitterFactory;
  */
 public class NewFXMain extends Application {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TwitterRootController.class);
+    
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -46,7 +40,8 @@ public class NewFXMain extends Application {
                this.popup();
             }
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TwitterRoot.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("ResourceBundle");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TwitterRoot.fxml"), bundle);
 
             Parent root = loader.load();
             TwitterRootController controller = loader.getController();
@@ -67,9 +62,12 @@ public class NewFXMain extends Application {
         }
     }
     
+    /** Validates the twitter4j.properties file
+     * @return Whether or not the twitter4j.properties file is there and valid
+     */
     private boolean hasCredentials() {
         Properties prop = new Properties();
-        try (InputStream propFileStream = new FileInputStream("src/main/resources/twitter4j.properties");){
+        try (InputStream propFileStream = new FileInputStream("twitter4j.properties");){
                prop.load(propFileStream);
                
                return(
@@ -93,39 +91,32 @@ public class NewFXMain extends Application {
         launch(args);
     }
 
+    /** Displays a popup to create the twitter4j.properties file
+     * @throws IOException
+     */
     private void popup() throws IOException {
         Stage stage = new Stage();
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Authenticate.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("ResourceBundle");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Authenticate.fxml"), bundle);
 
             Parent root = loader.load();
             AuthenticateController controller = loader.getController();
             
             Scene scene = new Scene(root);
-
+            
             stage.setTitle("Twitter Client");
-
+            
+            // Close app when X button is clicked
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent arg0) {
+                Platform.exit();
+            }
+            }); 
+            
             stage.setScene(scene);
             stage.showAndWait();
-    }
-    
-    private void showPopup() throws IOException {
-        AuthenticateController controller = new AuthenticateController();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Authenticate.fxml"));
-        loader.setController(controller);
-        
-        Dialog dialog = new Dialog();
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-        dialog.getDialogPane().setContent((Parent)loader.load());
-        
-        Node okBtn = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        //okBtn.setDisable(true);
-        
-        dialog.showAndWait();
-        /*
-        Alert alert = new Alert(Alert.AlertType.NONE, "test", ButtonType.OK);
-        alert.getDialogPane().setContent((Parent)loader.load());
-        alert.showAndWait();*/
     }
 
 }
