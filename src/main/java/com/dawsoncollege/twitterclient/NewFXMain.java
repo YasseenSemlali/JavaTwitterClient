@@ -17,10 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import org.slf4j.LoggerFactory;
@@ -35,7 +32,6 @@ public class NewFXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            
             if(!this.hasCredentials()) {
                this.popup();
             }
