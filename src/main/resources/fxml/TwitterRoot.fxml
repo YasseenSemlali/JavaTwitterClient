@@ -5,12 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="899.0" stylesheets="@../styles/twitterroot.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TwitterRootController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900" stylesheets="@../styles/twitterroot.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TwitterRootController">
    <center>
       <TabPane id="mainContent" fx:id="mainContent" prefHeight="400.0" prefWidth="462.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Home" />
-          <Tab text="Mentions" />
+          <Tab fx:id="feedTab" text="Feed" />
+          <Tab fx:id="searchTab" text="Search" />
+          <Tab fx:id="dmTab" text="DM" />
+          <Tab fx:id="profileTab" text="Profile" />
         </tabs>
       </TabPane>
    </center>
