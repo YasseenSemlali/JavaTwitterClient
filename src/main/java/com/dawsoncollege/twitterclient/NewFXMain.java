@@ -3,6 +3,7 @@ package com.dawsoncollege.twitterclient;
 
 import com.dawsoncollege.twitterclient.controller.AuthenticateController;
 import com.dawsoncollege.twitterclient.controller.TwitterRootController;
+import com.dawsoncollege.twitterclient.io.PropertiesManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,12 +28,13 @@ import org.slf4j.LoggerFactory;
  * @author 1742811
  */
 public class NewFXMain extends Application {
-    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TwitterRootController.class);
+    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(NewFXMain.class);
     
     @Override
     public void start(Stage primaryStage) {
+        PropertiesManager propManager = new PropertiesManager("twitter4j.properties");
         try {
-            if(!this.hasCredentials()) {
+            if(!propManager.hasCredentials()) {
                this.popup();
             }
             
@@ -52,33 +54,13 @@ public class NewFXMain extends Application {
 
         } catch (IOException | IllegalStateException ex) {
 
-            Logger.getLogger(NewFXMain.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex.getMessage());
 
             // See code samples for displaying an Alert box if an exception is thrown
         }
     }
     
-    /** Validates the twitter4j.properties file
-     * @return Whether or not the twitter4j.properties file is there and valid
-     */
-    private boolean hasCredentials() {
-        Properties prop = new Properties();
-        try (InputStream propFileStream = new FileInputStream("twitter4j.properties");){
-               prop.load(propFileStream);
-               
-               return(
-                     prop.get("oauth.consumerKey") != null &&
-                     prop.get("oauth.consumerSecret") != null &&
-                     prop.get("oauth.accessToken") != null &&
-                     prop.get("oauth.accessTokenSecret") != null
-                       );
-            } catch (FileNotFoundException ex) {
-                // Do nothing
-            } catch (IOException ex) {
-                // Do nothing
-            }
-        return false;
-    }
+    
     
     /**
      * @param args the command line arguments
