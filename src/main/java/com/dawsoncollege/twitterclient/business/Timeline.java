@@ -5,6 +5,8 @@
  */
 package com.dawsoncollege.twitterclient.business;
 
+import java.util.List;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 
 /**

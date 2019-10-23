@@ -25,10 +25,9 @@ public class TimelineImpl implements Timeline{
         this.page = 1;
     }
     
-    
     //Question Why size?
     public void updateTimeline() throws TwitterException {
-        List<TweetInfo> timeline = this.engine.getHomeTimeline(this.page);
+        List<TweetInfo> timeline = this.engine.getTimeline(this.page, TimelineType.HOME);
         for(TweetInfo info: timeline) {
             this.list.add(this.list.size(), info);
         }
