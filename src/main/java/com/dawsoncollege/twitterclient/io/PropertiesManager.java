@@ -52,6 +52,9 @@ public class PropertiesManager {
             }
         return false;
     }
+    
+    
+    
     /** Create the twitter4j.properties file based on user input
      * @param bean The AuthenticateBean that contains form data
      */
@@ -68,7 +71,7 @@ public class PropertiesManager {
                 accessSecretKey == null || accessSecretKey.isBlank() ||
                 accessKey == null || accessKey.isBlank() )) 
         {
-            Properties prop = new Properties();
+            Properties prop = new CleanProperties();
             prop.setProperty("oauth.consumerKey", consumerKey);
             prop.setProperty("oauth.consumerSecret", consumerSecretKey);
             prop.setProperty("oauth.accessToken", accessSecretKey);

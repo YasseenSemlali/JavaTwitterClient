@@ -11,10 +11,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
@@ -47,15 +50,21 @@ public class FeedController {
         this.timelineView.setCellFactory(p -> new TimelineCell());
         this.updateTimeline();
         this.initSendTweet();
+        
+    }
+
+    @FXML
+    void updateList(ActionEvent event) {
+        this.updateTimeline();
     }
 
     private void initSendTweet() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SendTweet.fxml"), resources);
-            Node content =  loader.load();
+            Node content = loader.load();
             SendTweetController controller = (SendTweetController) loader.getController();
-            
+
             this.borderPane.setBottom(content);
         } catch (IOException ex) {
             LOG.error("initSendTweet error", ex);
