@@ -54,7 +54,7 @@ public class NewFXMain extends Application {
 
         } catch (IOException | IllegalStateException ex) {
 
-            LOG.error(ex.getMessage());
+            LOG.error("Error in start method", ex);
 
             // See code samples for displaying an Alert box if an exception is thrown
         }

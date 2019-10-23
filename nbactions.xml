@@ -4,4 +4,12 @@
             <actionName>CUSTOM-run</actionName>
             <displayName>run</displayName>
         </action>
+        <action>
+            <actionName>CUSTOM-install</actionName>
+            <displayName>install</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+        </action>
     </actions>

@@ -5,10 +5,38 @@
  */
 package com.dawsoncollege.twitterclient.business;
 
+import twitter4j.Status;
+
 /**
  *
  * @author 1742811
  */
-public interface TweetInfo {
+public class TweetInfo {
+
+    private final Status status;
     
+    public TweetInfo(Status status) {
+        this.status = status;
+    }
+    
+    public String getName() {
+        return this.status.getUser().getName();
+    }
+
+    public String getText(){
+        return this.status.getText();
+    }
+
+    public String getImageURL(){
+        return this.status.getUser().getProfileImageURL();
+    }
+    
+    public String getHandle() {
+      return this.status.getUser().getScreenName();
+    }
+    
+    public String getDateString() {
+        return this.status.getCreatedAt().toString();
+    }
+
 }
