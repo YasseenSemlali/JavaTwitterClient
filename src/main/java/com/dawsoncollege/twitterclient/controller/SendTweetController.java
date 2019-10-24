@@ -36,9 +36,10 @@ public class SendTweetController {
 
     @FXML
     void sendTweet(ActionEvent event) {
-        this.sendTweetBean.setTweet("");
+        this.errMsg.setText("");
         try{
             this.tweetSender.sendTweet( this.sendTweetBean.getTweet());
+            this.sendTweetBean.setTweet("");
         } catch(TwitterException e) {
             LOG.debug("Error sending tweet", e);
             this.errMsg.setText(this.resources.getString("err_sending_tweet"));

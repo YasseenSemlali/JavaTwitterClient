@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.slf4j.LoggerFactory;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
+import com.dawsoncollege.twitterclient.business.TimelineType;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -61,9 +62,13 @@ public class TwitterRootController {
         assert menuPane != null : "fx:id=\"menuPane\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
 
         this.initMenu();
+        
         this.initTab(this.feedTab, "/fxml/Feed.fxml");
+        
         this.initTab(this.searchTab, "/fxml/Search.fxml");
+        
         this.initTab(this.dmTab, "/fxml/DM.fxml");
+        
         this.initTab(this.profileTab, "/fxml/Profile.fxml");
     }
     
@@ -98,9 +103,8 @@ public class TwitterRootController {
     	try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resources);
-
-            loader.setLocation(NewFXMain.class
-                    .getResource(path));
+            loader.setLocation(NewFXMain.class.getResource(path));
+            
             Node content = (Node) loader.load();
 
             tab.setContent(content);

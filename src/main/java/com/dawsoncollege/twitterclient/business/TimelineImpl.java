@@ -18,20 +18,27 @@ public class TimelineImpl implements Timeline{
     private final TwitterEngine engine;
     private final ObservableList<TweetInfo> list;
     private int page;
+    private final TimelineType timelineType;
     
-    public TimelineImpl(ObservableList<TweetInfo> list) {
+    public TimelineImpl(ObservableList<TweetInfo> list, TimelineType timelineType) {
         this.engine = new TwitterEngine();
         this.list = list;
         this.page = 1;
+        this.timelineType = timelineType;
     }
     
     //Question Why size?
     public void updateTimeline() throws TwitterException {
-        List<TweetInfo> timeline = this.engine.getTimeline(this.page, TimelineType.HOME);
+        List<TweetInfo> timeline = this.engine.getTimeline(this.page, this.timelineType);
         for(TweetInfo info: timeline) {
             this.list.add(this.list.size(), info);
         }
         
         this.page++;
+    }
+    
+    public void reset() {
+        this.page = 1;
+        this.list.clear();
     }
 }

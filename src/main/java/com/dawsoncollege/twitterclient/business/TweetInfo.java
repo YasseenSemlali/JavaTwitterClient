@@ -38,5 +38,9 @@ public class TweetInfo {
     public String getDateString() {
         return this.status.getCreatedAt().toString();
     }
+    
+    public boolean getIsRetweet() {
+        return this.status.isRetweet();
+    }
 
 }

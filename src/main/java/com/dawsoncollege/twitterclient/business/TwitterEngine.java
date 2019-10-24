@@ -47,9 +47,13 @@ public class TwitterEngine {
             case MENTIONS:
                 statuses = twitter.getMentionsTimeline(paging);
                 break;
-            case RETWEETS:
+            case RETWEETS_OF_ME:
                 statuses = twitter.getRetweetsOfMe(paging);
                 break;
+            case RETWEETS_BY_ME: {
+                statuses = twitter.getUserTimeline(paging).stream().filter(s -> s.isRetweet()).collect(Collectors.toList());
+                break;
+            }
         }
         
         LOG.debug("Retrieved " + statuses.size() + " tweets");
