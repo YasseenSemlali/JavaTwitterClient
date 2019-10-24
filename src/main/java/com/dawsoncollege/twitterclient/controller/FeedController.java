@@ -4,6 +4,7 @@ import com.dawsoncollege.twitterclient.NewFXMain;
 import com.dawsoncollege.twitterclient.business.Timeline;
 import com.dawsoncollege.twitterclient.business.TimelineCell;
 import com.dawsoncollege.twitterclient.business.TimelineImpl;
+import com.dawsoncollege.twitterclient.business.TimelineType;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
 import com.dawsoncollege.twitterclient.business.TwitterEngine;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class FeedController {
 
     private final static Logger LOG = LoggerFactory.getLogger(FeedController.class);
     private Timeline timeline;
+    private TimelineType timelineType = TimelineType.HOME;
 
     @FXML
     private ResourceBundle resources;
@@ -56,6 +58,16 @@ public class FeedController {
     @FXML
     void updateList(ActionEvent event) {
         this.updateTimeline();
+    } 
+    
+    @FXML
+    void refresh(ActionEvent event) {
+        this.timeline.reset();
+        this.updateTimeline();
+    }
+    
+    public void setTimelineType(TimelineType timelineType) {
+        this.timelineType = timelineType;
     }
 
     private void initSendTweet() {
@@ -74,7 +86,7 @@ public class FeedController {
 
     private void updateTimeline() {
         if (this.timeline == null) {
-            this.timeline = new TimelineImpl(this.timelineView.getItems());
+            this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
         }
 
         try {

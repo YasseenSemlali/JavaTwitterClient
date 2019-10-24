@@ -15,4 +15,5 @@ import twitter4j.TwitterException;
  */
 public interface Timeline{
     public void updateTimeline() throws TwitterException;
+    public void reset();
 }
