@@ -30,9 +30,9 @@ public class TimelineImpl implements Timeline{
     //Question Why size?
     public void updateTimeline() throws TwitterException {
         List<TweetInfo> timeline = this.engine.getTimeline(this.page, this.timelineType);
-        for(TweetInfo info: timeline) {
+        timeline.forEach((info) -> {
             this.list.add(this.list.size(), info);
-        }
+        });
         
         this.page++;
     }
