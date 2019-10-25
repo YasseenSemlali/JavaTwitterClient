@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.slf4j.LoggerFactory;
 
 public class HomeTimelineController {
@@ -25,11 +26,17 @@ public class HomeTimelineController {
     private URL location;
 
     @FXML
-    private AnchorPane content;
+    private BorderPane content;
 
     @FXML
     void initialize() {
         assert content != null : "fx:id=\"content\" was not injected: check your FXML file 'HomeTimeline.fxml'.";
+        
+        this.initTimeline();
+        this.initSendTweet();
+    }
+    
+    private void initTimeline() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resources);
@@ -41,9 +48,24 @@ public class HomeTimelineController {
             controller.setTimelineType(TimelineType.HOME);
             controller.updateTimeline();
 
-            this.content.getChildren().setAll(homeTimeline);
+            this.content.setCenter(homeTimeline);
         } catch (IOException ex) {
             LOG.error("initMenu error", ex);
+            Platform.exit();
+        }
+    }
+    
+
+    private void initSendTweet() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SendTweet.fxml"), resources);
+            Node timeline = loader.load();
+            SendTweetController controller = (SendTweetController) loader.getController();
+
+            this.content.setBottom(timeline);
+        } catch (IOException ex) {
+            LOG.error("initSendTweet error", ex);
             Platform.exit();
         }
     }
