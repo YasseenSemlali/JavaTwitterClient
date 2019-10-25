@@ -39,8 +39,6 @@ public class TimelineCell extends ListCell<TweetInfo>{
     protected void updateItem(TweetInfo item, boolean empty) {
         super.updateItem(item, empty);
 
-        LOG.debug("updateItem");
-
         if (empty || item == null) {
             setText(null);
             setGraphic(null);
@@ -56,7 +54,6 @@ public class TimelineCell extends ListCell<TweetInfo>{
      * @return The JavaFX node
      */
     private Node getTimelineCell(TweetInfo info) {
-        LOG.debug("getTimelineCell");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Tweet.fxml"),  ResourceBundle.getBundle(TwitterConstants.RESOURCE_BUNDLE_DIR));            
             VBox content = (VBox) loader.load();            

@@ -50,7 +50,6 @@ public class FeedController {
 
         this.timelineView.setItems(FXCollections.observableArrayList());
         this.timelineView.setCellFactory(p -> new TimelineCell());
-        this.updateTimeline();
         this.initSendTweet();
         
     }
@@ -84,7 +83,7 @@ public class FeedController {
         }
     }
 
-    private void updateTimeline() {
+    public void updateTimeline() {
         if (this.timeline == null) {
             this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
         }

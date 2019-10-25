@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/profile.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.profileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@../styles/profile.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.ProfileController">
    <top>
-      <HBox prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <HBox prefWidth="800.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onPostsClick" prefHeight="29.0" prefWidth="78.0" text="%posts" />
             <Button mnemonicParsing="false" onAction="#onMyRetweetsClick" prefHeight="29.0" prefWidth="78.0" text="%my_retweets" />
@@ -19,11 +19,10 @@
       </HBox>
    </top>
    <center>
-      <TabPane fx:id="mainContent" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="mainContent"  prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="postsTab">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
           <Tab fx:id="myRetweetsTab">
