@@ -41,6 +41,7 @@ public class NewFXMain extends Application {
             ResourceBundle bundle = ResourceBundle.getBundle("ResourceBundle");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TwitterRoot.fxml"), bundle);
 
+            
             Parent root = loader.load();
             TwitterRootController controller = loader.getController();
             
@@ -53,10 +54,8 @@ public class NewFXMain extends Application {
             
 
         } catch (IOException | IllegalStateException ex) {
-
             LOG.error("Error in start method", ex);
-
-            // See code samples for displaying an Alert box if an exception is thrown
+            Platform.exit();
         }
     }
     

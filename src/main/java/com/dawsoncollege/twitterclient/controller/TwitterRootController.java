@@ -63,7 +63,7 @@ public class TwitterRootController {
 
         this.initMenu();
         
-        this.initTab(this.feedTab, "/fxml/Feed.fxml");
+        this.initTab(this.feedTab, "/fxml/HomeTimeline.fxml");
         
         this.initTab(this.searchTab, "/fxml/Search.fxml");
         
@@ -100,10 +100,11 @@ public class TwitterRootController {
      * @param path The path to the fxml
      */
     private void initTab(Tab tab, String path) {
+        LOG.debug("initTab: " + path);
     	try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resources);
-            loader.setLocation(NewFXMain.class.getResource(path));
+            loader.setLocation(getClass().getResource(path));
             
             Node content = (Node) loader.load();
 

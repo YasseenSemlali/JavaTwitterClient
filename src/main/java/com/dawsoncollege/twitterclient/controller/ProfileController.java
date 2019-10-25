@@ -73,6 +73,9 @@ public class ProfileController {
         assert mentionsTab != null : "fx:id=\"mentionsTab\" was not injected: check your FXML file 'Profile.fxml'.";
 
         this.initTimeline(postsTab, TimelineType.USER);
+        this.initTimeline(myRetweetsTab, TimelineType.RETWEETS_BY_ME);
+        this.initTimeline(retweetsOfMeTab, TimelineType.RETWEETS_OF_ME);
+        this.initTimeline(mentionsTab, TimelineType.MENTIONS);
     }
     
     private void initTimeline(Tab tab, TimelineType timelineType) {
@@ -83,9 +86,11 @@ public class ProfileController {
             
             Node content = (Node) loader.load();
             FeedController controller = loader.getController();
-            controller.setTimelineType(timelineType);
-
             tab.setContent(content);
+            
+            controller.setTimelineType(timelineType);
+            controller.updateTimeline();
+            
         } catch (IOException ex) {
             LOG.error("initTimeline error", ex);
             Platform.exit();

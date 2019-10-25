@@ -1,3 +1,5 @@
+package com.dawsoncollege.twitterclient.controller;
+
 
 import com.dawsoncollege.twitterclient.NewFXMain;
 import com.dawsoncollege.twitterclient.business.TimelineType;
@@ -35,7 +37,9 @@ public class HomeTimelineController {
 
             Node homeTimeline = loader.load();
             FeedController controller = loader.getController();
+            
             controller.setTimelineType(TimelineType.HOME);
+            controller.updateTimeline();
 
             this.content.getChildren().setAll(homeTimeline);
         } catch (IOException ex) {
