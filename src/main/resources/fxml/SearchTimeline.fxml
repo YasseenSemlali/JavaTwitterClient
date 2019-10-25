@@ -6,15 +6,15 @@
 <?import javafx.scene.control.Button?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.SearchTimelineController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.SearchTimelineController">
     <top>
-      <HBox prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <HBox prefWidth="800.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#updateList" prefHeight="29.0" prefWidth="78.0" text="%next" />
          </children>
       </HBox>
    </top>
     <center>
-      <ListView fx:id="timelineView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="timelineView" prefWidth="800.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
