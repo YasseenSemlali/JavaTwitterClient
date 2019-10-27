@@ -5,7 +5,6 @@
  */
 package com.dawsoncollege.twitterclient.business;
 
-import com.dawsoncollege.twitterclient.controller.SendTweetController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Query;
@@ -15,7 +14,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 /**
- *
+ * Wrapper class for the {@link Status} object
  * @author 1742811
  */
 public class TweetInfo {

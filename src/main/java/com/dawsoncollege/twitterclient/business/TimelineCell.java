@@ -29,12 +29,6 @@ import org.slf4j.LoggerFactory;
 public class TimelineCell extends ListCell<TweetInfo>{
     private final static Logger LOG = LoggerFactory.getLogger(TimelineCell.class);
 
-    /**
-     * This method is called when ever cells need to be updated
-     *
-     * @param item
-     * @param empty
-     */
     @Override
     protected void updateItem(TweetInfo item, boolean empty) {
         super.updateItem(item, empty);
@@ -47,10 +41,9 @@ public class TimelineCell extends ListCell<TweetInfo>{
         }
     }
 
-    /**
-     * 
+    /** Generates a JavaFX node based on TweetInfo
      *
-     * @param info
+     * @param info  
      * @return The JavaFX node
      */
     private Node getTimelineCell(TweetInfo info) {

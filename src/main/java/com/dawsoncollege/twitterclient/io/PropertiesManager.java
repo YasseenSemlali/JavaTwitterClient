@@ -26,7 +26,6 @@ public class PropertiesManager {
 
     private final String propertiesDir;
     
-    // TODO javadoc
     public PropertiesManager(String propertiesDir) {
         this.propertiesDir = propertiesDir;
     }
@@ -45,11 +44,9 @@ public class PropertiesManager {
                      prop.get("oauth.accessToken") != null &&
                      prop.get("oauth.accessTokenSecret") != null
                        );
-            } catch (FileNotFoundException ignored) {
+            } catch ( IOException ignored) {
                 // Do nothing
-            } catch (IOException ignored) {
-                // Do nothing
-            }
+            } 
         return false;
     }
     
@@ -70,17 +67,18 @@ public class PropertiesManager {
                 consumerSecretKey == null || consumerSecretKey.isBlank() ||
                 accessSecretKey == null || accessSecretKey.isBlank() ||
                 accessKey == null || accessKey.isBlank() )) 
-        {
-            Properties prop = new CleanProperties();
-            prop.setProperty("oauth.consumerKey", consumerKey);
-            prop.setProperty("oauth.consumerSecret", consumerSecretKey);
-            prop.setProperty("oauth.accessToken", accessSecretKey);
-            prop.setProperty("oauth.accessTokenSecret", accessKey);
-            
+        {   
             // Add properties to the prop object
-            
+            // Not using prop.store because twitter4j doesn't support comments
             try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir);){
-               prop.store(propFileStream, "Twitter Properties");
+
+            	propFileStream.write(("oauth.consumerKey="+ consumerKey + "\n").getBytes());
+            	propFileStream.write(("oauth.consumerSecret="+ consumerSecretKey + "\n").getBytes());
+            	propFileStream.write(("oauth.accessToken="+ accessSecretKey + "\n").getBytes());
+            	propFileStream.write(("oauth.accessTokenSecret="+ accessKey + "\n").getBytes());
+            	
+            	
+               //prop.store(propFileStream, "Twitter Properties");
             }  catch (IOException ex) {
                 errorMsg = "Could not write twitter4j.properties file";
                 LOG.warn(ex.getMessage());

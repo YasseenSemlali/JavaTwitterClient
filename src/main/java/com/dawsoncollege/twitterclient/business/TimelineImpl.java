@@ -6,6 +6,10 @@
 package com.dawsoncollege.twitterclient.business;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.collections.ObservableList;
 import twitter4j.TwitterException;
 
@@ -14,6 +18,7 @@ import twitter4j.TwitterException;
  * @author 1742811
  */
 public class TimelineImpl implements Timeline{
+    private final static Logger LOG = LoggerFactory.getLogger(TimelineImpl.class);
 
     private final TwitterEngine engine;
     private final ObservableList<TweetInfo> list;
@@ -27,8 +32,9 @@ public class TimelineImpl implements Timeline{
         this.timelineType = timelineType;
     }
     
-    //Question Why size?
     public void updateTimeline() throws TwitterException {
+    	LOG.info("Getting page "+ this.page + " of timeline " + this.timelineType);
+    	
         List<TweetInfo> timeline = this.engine.getTimeline(this.page, this.timelineType);
         timeline.forEach((info) -> {
             this.list.add(this.list.size(), info);

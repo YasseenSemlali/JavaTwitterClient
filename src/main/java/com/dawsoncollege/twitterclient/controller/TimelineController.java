@@ -1,34 +1,27 @@
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.NewFXMain;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dawsoncollege.twitterclient.business.Timeline;
 import com.dawsoncollege.twitterclient.business.TimelineCell;
 import com.dawsoncollege.twitterclient.business.TimelineImpl;
 import com.dawsoncollege.twitterclient.business.TimelineType;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.application.Platform;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import twitter4j.TwitterException;
 
-public class FeedController {
+public class TimelineController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(FeedController.class);
+    private final static Logger LOG = LoggerFactory.getLogger(TimelineController.class);
     private Timeline timeline;
     private TimelineType timelineType = TimelineType.HOME;
 
@@ -46,8 +39,8 @@ public class FeedController {
 
     @FXML
     void initialize() {
-        assert timelineView != null : "fx:id=\"timelineView\" was not injected: check your FXML file 'Feed.fxml'.";
-        assert borderPane != null : "fx:id=\"borderPane\" was not injected: check your FXML file 'Feed.fxml'.";
+        assert timelineView != null : "fx:id=\"timelineView\" was not injected: check your FXML file 'Timeline.fxml'.";
+        assert borderPane != null : "fx:id=\"borderPane\" was not injected: check your FXML file 'Timeline.fxml'.";
 
         this.timelineView.setItems(FXCollections.observableArrayList());
         this.timelineView.setCellFactory(p -> new TimelineCell());
@@ -55,11 +48,13 @@ public class FeedController {
 
     @FXML
     void updateList(ActionEvent event) {
+    	LOG.debug("EVENT: updateList");
         this.updateTimeline();
     } 
     
     @FXML
     void refresh(ActionEvent event) {
+    	LOG.debug("EVENT: refresh");
         this.timeline.reset();
         this.updateTimeline();
     }

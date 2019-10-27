@@ -1,5 +1,8 @@
 package com.dawsoncollege.twitterclient.business;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 
@@ -8,6 +11,7 @@ import twitter4j.TwitterException;
  * @author 1742811
  */
 public class TweetSenderImpl implements TweetSender{
+    private final static Logger LOG = LoggerFactory.getLogger(TweetSenderImpl.class);
 
     private final TwitterEngine engine;
     
@@ -16,6 +20,8 @@ public class TweetSenderImpl implements TweetSender{
     }
     
     public void sendTweet(StatusUpdate tweet) throws TwitterException {
+    	LOG.info("Sending tweet: " + tweet.getStatus());
+    	
         this.engine.sendTweet(tweet);
     }
 }
