@@ -1,5 +1,6 @@
 package com.dawsoncollege.twitterclient.business;
 
+import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 
 /**
@@ -8,6 +9,6 @@ import twitter4j.TwitterException;
  */
 public interface TweetSender {
     
-     public void sendTweet(String tweet) throws TwitterException;
+     public void sendTweet(StatusUpdate tweet) throws TwitterException;
     
 }

@@ -1,5 +1,6 @@
 package com.dawsoncollege.twitterclient.business;
 
+import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 
 /**
@@ -14,7 +15,7 @@ public class TweetSenderImpl implements TweetSender{
         this.engine = new TwitterEngine();
     }
     
-    public void sendTweet(String tweet) throws TwitterException {
+    public void sendTweet(StatusUpdate tweet) throws TwitterException {
         this.engine.sendTweet(tweet);
     }
 }

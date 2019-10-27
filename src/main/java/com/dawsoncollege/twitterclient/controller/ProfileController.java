@@ -12,8 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.slf4j.LoggerFactory;
+import twitter4j.Query;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 
 public class ProfileController {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(ProfileController.class);
@@ -73,9 +78,15 @@ public class ProfileController {
         assert mentionsTab != null : "fx:id=\"mentionsTab\" was not injected: check your FXML file 'Profile.fxml'.";
 
         this.initTimeline(postsTab, TimelineType.USER);
-        this.initTimeline(myRetweetsTab, TimelineType.RETWEETS_BY_ME);
         this.initTimeline(retweetsOfMeTab, TimelineType.RETWEETS_OF_ME);
         this.initTimeline(mentionsTab, TimelineType.MENTIONS);
+        
+        Twitter twitter = TwitterFactory.getSingleton();
+        try{
+            this.initRetweetTimeline(myRetweetsTab, "from:"+twitter.getScreenName() + " filter:retweets");
+        } catch(TwitterException e) {
+            LOG.error("Error retrieving screen name", e);
+        }
     }
     
     private void initTimeline(Tab tab, TimelineType timelineType) {
@@ -84,12 +95,34 @@ public class ProfileController {
             loader.setResources(resources);
             loader.setLocation(NewFXMain.class.getResource("/fxml/Feed.fxml"));
             
-            Node content = (Node) loader.load();
+            BorderPane content = (BorderPane) loader.load();
+            content.setPrefHeight(this.mainContent.getPrefHeight());
+            
             FeedController controller = loader.getController();
             tab.setContent(content);
             
             controller.setTimelineType(timelineType);
             controller.updateTimeline();
+            
+        } catch (IOException ex) {
+            LOG.error("initTimeline error", ex);
+            Platform.exit();
+        }
+    }
+    
+     private void initRetweetTimeline(Tab tab, String searchTerm) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setResources(resources);
+            loader.setLocation(NewFXMain.class.getResource("/fxml/SearchTimeline.fxml"));
+            
+            Node content = (Node) loader.load();
+            SearchTimelineController controller = loader.getController();
+            tab.setContent(content);
+            
+            Query query = new Query(searchTerm);
+            query.setResultType(Query.ResultType.recent);
+            controller.search(query);
             
         } catch (IOException ex) {
             LOG.error("initTimeline error", ex);

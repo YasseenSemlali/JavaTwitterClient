@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +51,6 @@ public class FeedController {
 
         this.timelineView.setItems(FXCollections.observableArrayList());
         this.timelineView.setCellFactory(p -> new TimelineCell());
-        this.initSendTweet();
-        
     }
 
     @FXML
@@ -67,20 +66,6 @@ public class FeedController {
     
     public void setTimelineType(TimelineType timelineType) {
         this.timelineType = timelineType;
-    }
-
-    private void initSendTweet() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SendTweet.fxml"), resources);
-            Node content = loader.load();
-            SendTweetController controller = (SendTweetController) loader.getController();
-
-            this.borderPane.setBottom(content);
-        } catch (IOException ex) {
-            LOG.error("initSendTweet error", ex);
-            Platform.exit();
-        }
     }
 
     public void updateTimeline() {
