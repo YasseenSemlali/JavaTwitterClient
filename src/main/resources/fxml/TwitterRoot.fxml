@@ -7,7 +7,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900" stylesheets="@../styles/twitterroot.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TwitterRootController">
    <center>
-      <TabPane id="mainContent" fx:id="mainContent" prefHeight="400.0" prefWidth="462.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane id="mainContent" fx:id="mainContent" prefHeight="600.0" prefWidth="800" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="feedTab" text="Feed" />
           <Tab fx:id="searchTab" text="Search" />
@@ -17,6 +17,6 @@
       </TabPane>
    </center>
    <left>
-      <AnchorPane fx:id="menuPane" prefHeight="400.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="menuPane" prefHeight="600.0" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>

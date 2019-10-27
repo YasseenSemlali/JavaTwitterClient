@@ -1,0 +1,43 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+Button {
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-size: cover;
+  
+}
+
+MenuButton {
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+  -fx-background-size: cover;
+  
+}
+
+Button:hover {
+  -fx-background-color: grey;
+}
+
+#reply {
+  -fx-background-image: url("../Images/reply.png");
+}
+
+#retweet {
+  -fx-background-image: url("../Images/retweet.png");
+}
+
+#like {
+  -fx-background-image: url("../Images/like.png");
+}
+
+.menu-button > .arrow-button {
+    -fx-padding: 0;
+}
+
+.menu-button > .arrow-button > .arrow {
+    -fx-padding: 0;
+}

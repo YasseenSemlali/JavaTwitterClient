@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TweetController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="760.0" stylesheets="@../styles/tweet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TweetController">
    <children>
       <HBox prefHeight="80.0" prefWidth="760.0">
          <children>
@@ -15,7 +18,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </ImageView>
-            <VBox prefHeight="200.0" prefWidth="493.0">
+            <VBox prefHeight="70.0" prefWidth="690.0">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
@@ -33,10 +36,51 @@
                         <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                   </HBox>
-                  <Text fx:id="tweetContents" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="490.0" />
+                  <Text fx:id="tweetContents" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="626.0" />
                </children>
             </VBox>
          </children>
+      </HBox>
+      <HBox prefWidth="760.0" spacing="50.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0">
+               <children>
+                  <Button id="reply" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#reply" style="-fx-padding: 10;">
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Text fx:id="replies" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="39.13671875" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0">
+               <children>
+                  <MenuButton id="retweet" fx:id="retweetBtn" minHeight="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#retweet" text="%retweet" />
+                      <MenuItem mnemonicParsing="false" onAction="#retweetWithReplies" text="%retweet_with_replies" />
+                    </items>
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
+                  </MenuButton>
+                  <Text fx:id="retweets" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="39.13671875" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0">
+               <children>
+                  <Button id="like" fx:id="likeBtn" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#like" style="-fx-padding: 10;">
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Text fx:id="likes" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="39.13671875" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </HBox>
    </children>
 </VBox>
