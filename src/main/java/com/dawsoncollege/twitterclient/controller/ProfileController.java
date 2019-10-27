@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -51,21 +52,25 @@ public class ProfileController {
 
     @FXML
     void onMentionsClick(ActionEvent event) {
+    	LOG.debug("EVENT: onMentionsClick");
         this.mainContent.getSelectionModel().select(MENTIONS_INDEX);
     }
 
     @FXML
     void onMyRetweetsClick(ActionEvent event) {
+    	LOG.debug("EVENT: onMyRetweetsClick");
         this.mainContent.getSelectionModel().select(MY_RETWEETS_INDEX);
     }
 
     @FXML
     void onPostsClick(ActionEvent event) {
+    	LOG.debug("EVENT: onPostsClick");
         this.mainContent.getSelectionModel().select(POSTS_INDEX);
     }
 
     @FXML
     void onRetweetedClick(ActionEvent event) {
+    	LOG.debug("EVENT: onRetweetedClick");
         this.mainContent.getSelectionModel().select(RETWEETED_INDEX);
     }
 
@@ -93,12 +98,12 @@ public class ProfileController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resources);
-            loader.setLocation(NewFXMain.class.getResource("/fxml/Feed.fxml"));
+            loader.setLocation(NewFXMain.class.getResource("/fxml/Timeline.fxml"));
             
             BorderPane content = (BorderPane) loader.load();
             content.setPrefHeight(this.mainContent.getPrefHeight());
             
-            FeedController controller = loader.getController();
+            TimelineController controller = loader.getController();
             tab.setContent(content);
             
             controller.setTimelineType(timelineType);
@@ -122,10 +127,15 @@ public class ProfileController {
             
             Query query = new Query(searchTerm);
             query.setResultType(Query.ResultType.recent);
-            controller.search(query);
+            try {
+            	 controller.search(query);
+            } catch(TwitterException e) {
+            	 LOG.error("Error retweeting retweets", e);
+            }
+           
             
         } catch (IOException ex) {
-            LOG.error("initTimeline error", ex);
+            LOG.error("initRetweetTimeline error", ex);
             Platform.exit();
         }
     }

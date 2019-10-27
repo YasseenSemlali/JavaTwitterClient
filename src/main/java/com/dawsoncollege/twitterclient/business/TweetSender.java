@@ -4,7 +4,7 @@ import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 
 /**
- *
+ * Handles the creation of tweets
  * @author 1742811
  */
 public interface TweetSender {

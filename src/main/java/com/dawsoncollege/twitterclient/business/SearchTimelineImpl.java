@@ -28,6 +28,9 @@ public class SearchTimelineImpl implements SearchTimeline {
     private final ObservableList<TweetInfo> list;
     private QueryResult currentQuery;
 
+    /** 
+     * @param list The ObservableList that contains the tweets to display
+     */
     public SearchTimelineImpl(ObservableList<TweetInfo> list) {
         
         this.engine = new TwitterEngine();
@@ -45,12 +48,21 @@ public class SearchTimelineImpl implements SearchTimeline {
     public void getNext() throws TwitterException {
         if(this.currentQuery == null) {
             LOG.debug("getNext called without a prior search, ignoring");
+            return;
         }
         
         this.executeSearch(this.currentQuery.nextQuery());
     }
     
+    /** Updates the query in memory to retrieve the next page, and updates the ObservableList with the results
+     * @param query The query to execute
+     * @throws TwitterException
+     */
     private void executeSearch(Query query) throws TwitterException {
+    	query.setCount(TwitterConstants.TWEETS_PER_SEARCH);
+    	LOG.info("Searching: " + query.getQuery());
+    	
+    	
         this.currentQuery = this.engine.searchTweets(query);
         List<TweetInfo> statuses = this.currentQuery.getTweets().stream().map(s -> new TweetInfo(s)).collect(Collectors.toList());
         

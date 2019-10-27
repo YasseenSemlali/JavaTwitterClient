@@ -3,7 +3,7 @@ package com.dawsoncollege.twitterclient.controller;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
 import com.dawsoncollege.twitterclient.business.TimelineType;
-import com.dawsoncollege.twitterclient.controller.FeedController;
+import com.dawsoncollege.twitterclient.controller.TimelineController;
 import com.dawsoncollege.twitterclient.controller.TwitterRootController;
 import java.io.IOException;
 import java.net.URL;
@@ -40,17 +40,17 @@ public class HomeTimelineController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resources);
-            loader.setLocation(NewFXMain.class.getResource("/fxml/Feed.fxml"));
+            loader.setLocation(NewFXMain.class.getResource("/fxml/Timeline.fxml"));
 
             Node homeTimeline = loader.load();
-            FeedController controller = loader.getController();
+            TimelineController controller = loader.getController();
             
             controller.setTimelineType(TimelineType.HOME);
             controller.updateTimeline();
 
             this.content.setCenter(homeTimeline);
         } catch (IOException ex) {
-            LOG.error("initMenu error", ex);
+            LOG.error("initTimeline error", ex);
             Platform.exit();
         }
     }

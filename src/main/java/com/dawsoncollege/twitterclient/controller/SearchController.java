@@ -10,11 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Query;
+import twitter4j.TwitterException;
 
 public class SearchController {
     private final static Logger LOG = LoggerFactory.getLogger(SearchController.class);
@@ -37,8 +39,19 @@ public class SearchController {
 
     @FXML
     void executeSearch(ActionEvent event) {
+    	LOG.debug("EVENT: executeSearch");
+    	
         Query query = new Query(this.searchBean.getSearchTerm());
-        this.timelineController.search(query);
+        try {
+			this.timelineController.search(query);
+		} catch (TwitterException e) {
+			 LOG.error("Error retrieving search results", e);
+	            
+	         Alert alert = new Alert(Alert.AlertType.ERROR);
+	         alert.setContentText(resources.getString("err_retrieving_search"));
+	            
+	         alert.showAndWait();
+		}
     }
 
     @FXML
@@ -63,7 +76,7 @@ public class SearchController {
             this.content.setCenter(content);
             this.timelineController = controller;
         } catch (IOException ex) {
-            LOG.error("initSendTweet error", ex);
+            LOG.error("initTimeline error", ex);
             Platform.exit();
         }
     }

@@ -20,15 +20,17 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 /**
- *
+ * Contains all methods that interface with Twitter directly
  * @author 1742811
  */
-//Question Static?
 public class TwitterEngine {
-
     private final static Logger LOG = LoggerFactory.getLogger(TwitterEngine.class);
 
-
+    /**  Gets a timeline from twitter
+     * @param page The page of the timeline
+     * @param timelineType The type of timeline to retrieve
+     * @throws TwitterException
+     */
     public List<TweetInfo> getTimeline(int page, TimelineType timelineType) throws TwitterException {
         LOG.debug("getTimeLine | page: " + page);
         
@@ -59,23 +61,13 @@ public class TwitterEngine {
 
         return statuses.stream().map(s -> new TweetInfo(s)).collect(Collectors.toList());
     }
-
-    /*
-    public  List<TweetInfo> searchTweets(Query query) throws TwitterException {
-        LOG.debug("searchtweets: " + query.getQuery());
-
-        Twitter twitter = TwitterFactory.getSingleton();
-
-        QueryResult result = twitter.search(query);
-        List<Status> statuses = result.getTweets();
-        
-        LOG.debug("Retrieved " + result.getCount() + " tweets");
-        
-        return statuses.stream().map(s -> new TweetInfo(s)).collect(Collectors.toList());
-    }
-*/
     
-     public  QueryResult searchTweets(Query query) throws TwitterException {
+     /** Executes a query
+     * @param query The query to execute
+     * @return The query results
+     * @throws TwitterException
+     */
+    public  QueryResult searchTweets(Query query) throws TwitterException {
         LOG.debug("searchtweets: " + query.getQuery());
 
         Twitter twitter = TwitterFactory.getSingleton();
@@ -87,6 +79,11 @@ public class TwitterEngine {
         return result;
     }
 
+    /** Sends a tweet
+     * @param tweet
+     * @return The tweet's text
+     * @throws TwitterException
+     */
     public String sendTweet(StatusUpdate tweet) throws TwitterException {
         LOG.debug("sendTweet: " + tweet.getStatus());
 
@@ -95,6 +92,12 @@ public class TwitterEngine {
         return status.getText();
     }
 
+    /** Sends a direct message
+     * @param recipientName Recipient's twitter handle
+     * @param msg The message to send
+     * @return The message's text
+     * @throws TwitterException
+     */
     public String sendDM(String recipientName, String msg) throws TwitterException {
         LOG.debug("sendDM: " + msg);
 

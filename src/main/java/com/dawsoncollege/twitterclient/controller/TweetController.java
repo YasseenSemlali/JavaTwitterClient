@@ -3,6 +3,7 @@ package com.dawsoncollege.twitterclient.controller;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
@@ -69,7 +70,8 @@ public class TweetController {
 
     @FXML
     void like(ActionEvent event) {     
-        LOG.info("like " + this.info.getStatusUrl());
+        LOG.info("EVENT: like " + this.info.getStatusUrl());
+        
         try {
             Twitter twitter = TwitterFactory.getSingleton();
             
@@ -90,7 +92,7 @@ public class TweetController {
 
     @FXML
     void retweet(ActionEvent event) {        
-        LOG.info("retweet " + this.info.getStatusUrl());
+        LOG.info("EVENT: retweet " + this.info.getStatusUrl());
         try {
             Twitter twitter = TwitterFactory.getSingleton();
             if(this.info.isRetweetedByUser()) {
@@ -110,7 +112,7 @@ public class TweetController {
 
     @FXML
     void retweetWithReplies(ActionEvent event) {
-        LOG.info("retweet with replies " + this.info.getStatusUrl());
+        LOG.info("EVENT: retweetWithReplies " + this.info.getStatusUrl());
         if(this.info == null) {
             throw new IllegalStateException("Tweet contents must be initialized");
         }
@@ -120,7 +122,7 @@ public class TweetController {
 
     @FXML
     void reply(ActionEvent event) {
-        LOG.info("reply to tweet " + this.info.getStatusUrl());
+        LOG.info("EVENT: reply " + this.info.getStatusUrl());
         if(this.info == null) {
             throw new IllegalStateException("Tweet contents must be initialized");
         }
@@ -142,7 +144,13 @@ public class TweetController {
         assert retweetBtn != null : "fx:id=\"likeBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
     }
     
+    /** Shows a dialog that allows the user to send a tweet
+     * @param inReplyTo Tweet that the comment is a reply to. Set to -1 for none.
+     * @param retweetOf Tweet that this comment is retweeting. Set to an empty string for none.
+     */
     private void showSendTweet(long inReplyTo, String retweetOf) {
+    	Objects.requireNonNull(retweetOf, "retweetOf cannot be null");
+    	
         DialogPane content = new DialogPane();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SendTweet.fxml"), resources);
@@ -165,8 +173,11 @@ public class TweetController {
         }
     }
     
-    public void setContents(TweetInfo info) {
-        this.info = info;
+    /** Initializes the visual info of the tweet
+     * @param twitterInfo
+     */
+    public void setContents(TweetInfo twitterInfo) {
+        this.info = twitterInfo;
         
         this.updateContents();
     }

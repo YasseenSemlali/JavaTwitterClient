@@ -12,4 +12,11 @@
                 <goal>install</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-run no logging</actionName>
+            <displayName>run no logging</displayName>
+            <properties>
+                <twitter4j.loggerFactory>twitter4j.NullLoggerFactory</twitter4j.loggerFactory>
+            </properties>
+        </action>
     </actions>

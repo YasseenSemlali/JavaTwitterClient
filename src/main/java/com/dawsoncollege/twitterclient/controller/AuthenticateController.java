@@ -4,19 +4,14 @@
 
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.NewFXMain;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import org.slf4j.LoggerFactory;
+
 import com.dawsoncollege.twitterclient.beans.AuthenticateBean;
 import com.dawsoncollege.twitterclient.io.PropertiesManager;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-import java.nio.file.Path;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,11 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.slf4j.LoggerFactory;
 
 public class AuthenticateController {
-    private final AuthenticateBean authenticateBean;
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
+    private final AuthenticateBean authenticateBean;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -78,6 +72,7 @@ public class AuthenticateController {
      */
     @FXML
     void createProperties(ActionEvent event) {
+    	LOG.debug("EVENT: createProperties");
         PropertiesManager propManager = new PropertiesManager("twitter4j.properties");
         
         String msg = propManager.createProperties(this.authenticateBean);

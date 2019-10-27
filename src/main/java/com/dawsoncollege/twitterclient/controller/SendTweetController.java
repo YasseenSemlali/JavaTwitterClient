@@ -1,14 +1,17 @@
 
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.beans.SendTweetBean;
-import com.dawsoncollege.twitterclient.business.TweetSender;
-import com.dawsoncollege.twitterclient.business.TweetSenderImpl;
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Binding;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.dawsoncollege.twitterclient.beans.SendTweetBean;
+import com.dawsoncollege.twitterclient.business.TweetSender;
+import com.dawsoncollege.twitterclient.business.TweetSenderImpl;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +19,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import twitter4j.StatusUpdate;
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 public class SendTweetController {
@@ -45,9 +47,12 @@ public class SendTweetController {
 
     @FXML
     void sendTweet(ActionEvent event) {
+    	LOG.debug("EVENT: sendTweet");
+    	
         this.errMsg.setText("");
         try{
-            StatusUpdate  tweet = new StatusUpdate(this.sendTweetBean.getTweet() + (this.retweetOf.isBlank() ? "" : (" " + this.retweetOf)));
+        	String appendMsg = this.retweetOf.isBlank() ? "" : (" " + this.retweetOf);
+            StatusUpdate  tweet = new StatusUpdate(this.sendTweetBean.getTweet() + appendMsg);
             
             if(this.inReplyTo != -1) {
                 tweet.setInReplyToStatusId(inReplyTo);
@@ -55,7 +60,7 @@ public class SendTweetController {
             
             this.tweetSender.sendTweet(tweet);
             this.sendTweetBean.setTweet("");
-            
+
             if(this.isAlert) {
                 Node source = (Node) event.getSource();
                 Stage  stage = (Stage) source.getScene().getWindow();
@@ -81,15 +86,25 @@ public class SendTweetController {
         this.sendTweetBean = new SendTweetBean(); 
     }
     
+    /** Sets the tweet that the current tweet will be a reply to. Default value is -1 for a standalone tweet.
+     * @param id
+     */
     public void setInReplyTo(long id) {
         this.inReplyTo = id;
     }
     
+    /** The twitter URL to append to the end of the message. This is not validated, and if it is invalid the tweet may exceed
+     * the 280 character limit
+     * @param tweetUrl Cannot be null
+     */
     public void setRetweetOf(String tweetUrl) {
         Objects.requireNonNull(tweetUrl, "Tweet URL cannot be null");
         this.retweetOf = tweetUrl;
     }
     
+    /** If set to true, the stage will be closed once the tweet is sent
+     * @param isAlert
+     */
     public void setIsAlert(boolean isAlert) {
         this.isAlert = isAlert;
     }

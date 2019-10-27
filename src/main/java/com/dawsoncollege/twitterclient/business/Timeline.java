@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dawsoncollege.twitterclient.business;
 
-import java.util.List;
-import twitter4j.Status;
 import twitter4j.TwitterException;
 
-/**
+/** A timeline containinga twitter timeline. All values are stored internally, and an object to store them must be specified elsewhere
  *
  * @author 1742811
  */
 public interface Timeline{
+    /** Gets the next set of tweets from the timeline
+     * @throws TwitterException
+     */
     public void updateTimeline() throws TwitterException;
+    /** Clears all tweets
+     * 
+     */
     public void reset();
 }
