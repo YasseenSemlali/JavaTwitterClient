@@ -23,12 +23,6 @@ public class DMController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        TwitterEngine engine = new TwitterEngine();
         
-        try {
-          this.dmList = engine.getDMs();
-        } catch (TwitterException ex) {
-            // TODO handle
-        }
     }
 }
