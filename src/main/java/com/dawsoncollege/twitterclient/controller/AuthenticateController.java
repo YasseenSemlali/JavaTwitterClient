@@ -4,16 +4,15 @@
 
 package com.dawsoncollege.twitterclient.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
-import java.nio.file.Path;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
+
+import com.dawsoncollege.twitterclient.beans.AuthenticateBean;
+import com.dawsoncollege.twitterclient.io.PropertiesManager;
+
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AuthenticateController {
+    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
+    private final AuthenticateBean authenticateBean;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -47,51 +48,39 @@ public class AuthenticateController {
     @FXML // fx:id="okBtn"
     private Button okBtn; // Value injected by FXMLLoader
 
-    /** Create the twitter4j.properties file based on user input
-     * @param event
-     */
-    @FXML
-    void createProperties(ActionEvent event) {
-        String consumerKey = consumerKeyTxt.getText();
-        String consumerSecretKey = consumerSecretKeyTxt.getText();
-        String accessSecretKey = accessSecretKeyTxt.getText();
-        String accessKey = accessKeyTxt.getText();
-        
-        if(!(consumerKey == null || consumerKey.isBlank() ||
-                consumerSecretKey == null || consumerSecretKey.isBlank() ||
-                accessSecretKey == null || accessSecretKey.isBlank() ||
-                accessKey == null || accessKey.isBlank() )) 
-        {
-            Properties prop = new Properties();
-            prop.setProperty("oauth.consumerKey", consumerKey);
-            prop.setProperty("oauth.consumerSecret", consumerSecretKey);
-            prop.setProperty("oauth.accessToken", accessSecretKey);
-            prop.setProperty("oauth.accessTokenSecret", accessKey);
-            
-            // Add properties to the prop object
-            
-            try (OutputStream propFileStream = new FileOutputStream("twitter4j.properties");){
-               prop.store(propFileStream, "Twitter Properties");
-               Stage stage = (Stage) okBtn.getScene().getWindow();
-               stage.close();
-            }  catch (IOException ex) {
-                this.errorMsgTxt.setText("Could not write twitter4j.properties file");
-                Logger.getLogger(AuthenticateController.class.getName()).log(Level.WARNING, null, ex);
-            }
-            
-        } else {
-            this.errorMsgTxt.setText("Please fill out all fields");
-        }
-    }
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-         assert consumerKeyTxt != null : "fx:id=\"consumerKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
+        assert consumerKeyTxt != null : "fx:id=\"consumerKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert consumerSecretKeyTxt != null : "fx:id=\"consumerSecretKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert accessKeyTxt != null : "fx:id=\"accessKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert accessSecretKeyTxt != null : "fx:id=\"accessSecretKeyTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert errorMsgTxt != null : "fx:id=\"errorMsgTxt\" was not injected: check your FXML file 'Authenticate.fxml'.";
         assert okBtn != null : "fx:id=\"okBtn\" was not injected: check your FXML file 'Authenticate.fxml'.";
 
+        Bindings.bindBidirectional(consumerKeyTxt.textProperty(), this.authenticateBean.consumerKeyProperty());
+        Bindings.bindBidirectional(consumerSecretKeyTxt.textProperty(), this.authenticateBean.consumerSecretKeyProperty());
+        Bindings.bindBidirectional(accessKeyTxt.textProperty(), this.authenticateBean.accessKeyProperty());
+        Bindings.bindBidirectional(accessSecretKeyTxt.textProperty(), this.authenticateBean.accessSecretKeyProperty());
+    }
+    
+    public AuthenticateController() {
+        this.authenticateBean = new AuthenticateBean();
+    }
+
+    /** Create the twitter4j.properties file based on user input
+     * @param event
+     */
+    @FXML
+    void createProperties(ActionEvent event) {
+    	LOG.debug("EVENT: createProperties");
+        PropertiesManager propManager = new PropertiesManager("twitter4j.properties");
+        
+        String msg = propManager.createProperties(this.authenticateBean);
+        if(msg.equals("")) {
+           Stage stage = (Stage) okBtn.getScene().getWindow();
+           stage.close();
+         } else {
+           this.errorMsgTxt.setText(msg);
+         }
     }
 }
