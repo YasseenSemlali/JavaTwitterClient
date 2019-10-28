@@ -3,7 +3,7 @@ package com.dawsoncollege.twitterclient.business;
 
 /** 
  * Types of timelines that can be retrieved
- * @author 1742811
+ * @author Yasseen
  */
 public enum TimelineType {
     /**

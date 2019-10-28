@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  *
- * @author 1742811
+ * @author Yasseen
  */
 public class SendTweetBean {
     private final StringProperty tweetProperty;

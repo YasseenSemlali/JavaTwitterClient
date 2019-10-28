@@ -15,7 +15,7 @@ import twitter4j.TwitterFactory;
 
 /**
  * Wrapper class for the {@link Status} object
- * @author 1742811
+ * @author Yasseen
  */
 public class TweetInfo {
     private final static Logger LOG = LoggerFactory.getLogger(TweetInfo.class);

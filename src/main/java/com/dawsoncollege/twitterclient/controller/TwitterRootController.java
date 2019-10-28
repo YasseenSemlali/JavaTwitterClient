@@ -63,13 +63,13 @@ public class TwitterRootController {
 
         this.initMenu();
         
-        this.initTab(this.feedTab, "/fxml/HomeTimeline.fxml");
+        //this.initTab(this.feedTab, "/fxml/HomeTimeline.fxml");
         
-        this.initTab(this.searchTab, "/fxml/Search.fxml");
+        //this.initTab(this.searchTab, "/fxml/Search.fxml");
         
         this.initTab(this.dmTab, "/fxml/DM.fxml");
         
-        this.initTab(this.profileTab, "/fxml/Profile.fxml");
+        //this.initTab(this.profileTab, "/fxml/Profile.fxml");
     }
     
     /** Initializes the sidebar

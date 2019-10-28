@@ -19,7 +19,7 @@ import twitter4j.TwitterException;
 
 /**
  *
- * @author 1742811
+ * @author Yasseen
  */
 public class SearchTimelineImpl implements SearchTimeline {
     private final static Logger LOG = LoggerFactory.getLogger(SearchController.class);
