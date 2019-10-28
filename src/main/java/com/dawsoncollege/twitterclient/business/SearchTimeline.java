@@ -6,7 +6,7 @@ import twitter4j.TwitterException;
 
 /** A timeline containing search results. All values are stored internally, and an object to store them must be specified elsewhere
  *
- * @author 1742811
+ * @author Yasseen
  */
 public interface SearchTimeline {
     /** Searches twitter using the specified query 

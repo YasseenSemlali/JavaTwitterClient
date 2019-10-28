@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author 1742811
+ * @author Yasseen
  */
 public class PropertiesManager {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(PropertiesManager.class);

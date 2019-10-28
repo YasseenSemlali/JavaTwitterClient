@@ -4,7 +4,7 @@ import twitter4j.TwitterException;
 
 /** A timeline containinga twitter timeline. All values are stored internally, and an object to store them must be specified elsewhere
  *
- * @author 1742811
+ * @author Yasseen
  */
 public interface Timeline{
     /** Gets the next set of tweets from the timeline

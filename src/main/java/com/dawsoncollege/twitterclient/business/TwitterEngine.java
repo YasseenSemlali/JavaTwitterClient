@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.DirectMessage;
+import twitter4j.DirectMessageList;
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -21,7 +22,7 @@ import twitter4j.TwitterFactory;
 
 /**
  * Contains all methods that interface with Twitter directly
- * @author 1742811
+ * @author Yasseen
  */
 public class TwitterEngine {
     private final static Logger LOG = LoggerFactory.getLogger(TwitterEngine.class);
@@ -35,7 +36,7 @@ public class TwitterEngine {
         LOG.debug("getTimeLine | page: " + page);
         
         Twitter twitter = TwitterFactory.getSingleton();
-
+        
         Paging paging = new Paging();
         paging.setCount(TwitterConstants.TWEETS_PER_UPDATE);
         paging.setPage(page);
@@ -105,4 +106,32 @@ public class TwitterEngine {
         DirectMessage message = twitter.sendDirectMessage(recipientName, msg);
         return message.getText();
     }
+    
+    /** Gets a list of direct messages, starting from the cursor
+     * @param cursor
+     * @return
+     * @throws TwitterException
+     */
+    public DirectMessageList getDMs(String cursor) throws TwitterException {
+        LOG.debug("getDM: "  + cursor);
+        
+        Twitter twitter = TwitterFactory.getSingleton();
+        DirectMessageList messages = twitter.getDirectMessages(TwitterConstants.DIRECT_MESSAGES_PER_UPDATE, cursor);
+        
+        return messages;
+    }
+    
+    /** Gets a list of direct messages, starting from the most recent
+     * @return
+     * @throws TwitterException
+     */
+    public DirectMessageList getDMs() throws TwitterException {
+        LOG.debug("getDM: ");
+        
+        Twitter twitter = TwitterFactory.getSingleton();
+        DirectMessageList messages = twitter.getDirectMessages(TwitterConstants.DIRECT_MESSAGES_PER_UPDATE);
+        
+        return messages;
+    }
+    
 }

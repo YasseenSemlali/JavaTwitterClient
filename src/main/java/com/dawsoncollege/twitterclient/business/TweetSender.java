@@ -5,7 +5,7 @@ import twitter4j.TwitterException;
 
 /**
  * Handles the creation of tweets
- * @author 1742811
+ * @author Yasseen
  */
 public interface TweetSender {
     

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author 1742811
+ * @author Yasseen
  */
 public class TimelineCell extends ListCell<TweetInfo>{
     private final static Logger LOG = LoggerFactory.getLogger(TimelineCell.class);
