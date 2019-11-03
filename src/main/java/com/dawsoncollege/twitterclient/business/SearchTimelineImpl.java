@@ -33,7 +33,7 @@ public class SearchTimelineImpl implements SearchTimeline {
      */
     public SearchTimelineImpl(ObservableList<TweetInfo> list) {
         
-        this.engine = new TwitterEngine();
+        this.engine = new TwitterEngineImpl();
         this.list = list;
     }
 
@@ -64,7 +64,7 @@ public class SearchTimelineImpl implements SearchTimeline {
     	
     	
         this.currentQuery = this.engine.searchTweets(query);
-        List<TweetInfo> statuses = this.currentQuery.getTweets().stream().map(s -> new TweetInfo(s)).collect(Collectors.toList());
+        List<TweetInfo> statuses = this.currentQuery.getTweets().stream().map(s -> new TweetInfoImpl(s)).collect(Collectors.toList());
         
         statuses.forEach((info) -> {
             this.list.add(this.list.size(), info);

@@ -16,7 +16,7 @@ public class TweetSenderImpl implements TweetSender{
     private final TwitterEngine engine;
     
     public TweetSenderImpl() {
-        this.engine = new TwitterEngine();
+        this.engine = new TwitterEngineImpl();
     }
     
     public void sendTweet(StatusUpdate tweet) throws TwitterException {
