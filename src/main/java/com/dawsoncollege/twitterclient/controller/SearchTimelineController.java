@@ -5,6 +5,7 @@ import com.dawsoncollege.twitterclient.business.SearchTimelineImpl;
 import com.dawsoncollege.twitterclient.business.TimelineCell;
 import com.dawsoncollege.twitterclient.business.TimelineImpl;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TweetInfo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

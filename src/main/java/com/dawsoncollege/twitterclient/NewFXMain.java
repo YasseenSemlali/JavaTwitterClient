@@ -3,7 +3,7 @@ package com.dawsoncollege.twitterclient;
 
 import com.dawsoncollege.twitterclient.controller.AuthenticateController;
 import com.dawsoncollege.twitterclient.controller.TwitterRootController;
-import com.dawsoncollege.twitterclient.io.PropertiesManager;
+import com.dawsoncollege.twitterclient.io.TwitterPropertiesManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        PropertiesManager propManager = new PropertiesManager("twitter4j.properties");
+        TwitterPropertiesManager propManager = new TwitterPropertiesManager("twitter4j.properties");
         try {
             if(!propManager.hasCredentials()) {
                this.popup();

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import org.slf4j.LoggerFactory;
 
 import com.dawsoncollege.twitterclient.beans.AuthenticateBean;
-import com.dawsoncollege.twitterclient.io.PropertiesManager;
+import com.dawsoncollege.twitterclient.io.TwitterPropertiesManager;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -73,7 +73,7 @@ public class AuthenticateController {
     @FXML
     void createProperties(ActionEvent event) {
     	LOG.debug("EVENT: createProperties");
-        PropertiesManager propManager = new PropertiesManager("twitter4j.properties");
+        TwitterPropertiesManager propManager = new TwitterPropertiesManager("twitter4j.properties");
         
         String msg = propManager.createProperties(this.authenticateBean);
         if(msg.equals("")) {

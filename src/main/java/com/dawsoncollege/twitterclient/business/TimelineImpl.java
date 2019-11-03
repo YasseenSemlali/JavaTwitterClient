@@ -26,7 +26,7 @@ public class TimelineImpl implements Timeline{
     private final TimelineType timelineType;
     
     public TimelineImpl(ObservableList<TweetInfo> list, TimelineType timelineType) {
-        this.engine = new TwitterEngine();
+        this.engine = new TwitterEngineImpl();
         this.list = list;
         this.page = 1;
         this.timelineType = timelineType;

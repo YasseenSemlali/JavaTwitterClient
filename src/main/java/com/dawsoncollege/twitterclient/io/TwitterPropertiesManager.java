@@ -21,12 +21,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Yasseen
  */
-public class PropertiesManager {
-    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(PropertiesManager.class);
+public class TwitterPropertiesManager {
+    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TwitterPropertiesManager.class);
 
     private final String propertiesDir;
     
-    public PropertiesManager(String propertiesDir) {
+    public TwitterPropertiesManager(String propertiesDir) {
         this.propertiesDir = propertiesDir;
     }
     
