@@ -9,6 +9,7 @@ import java.util.List;
 import twitter4j.DirectMessageList;
 import twitter4j.Query;
 import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;
 
@@ -81,6 +82,8 @@ public interface TwitterEngine {
      public void retweetTweet(long statusId) throws TwitterException;
      
      public void unretweetTweet(long statusId) throws TwitterException;
+     
+     public Status getStatus(long id)  throws TwitterException;
      
      public void followUser(String handle) throws TwitterException;
      

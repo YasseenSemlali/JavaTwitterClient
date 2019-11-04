@@ -1,10 +1,15 @@
 package com.dawsoncollege.twitterclient.business;
 
+import java.util.Date;
+
 /**
  * Wrapper class for the {@link Status} object
  * @author Yasseen
  */
 public interface TweetInfo {
+    
+    public long getStatusId();
+    
     public String getName();
     
     public String getHandle();
@@ -14,6 +19,8 @@ public interface TweetInfo {
     public String getProfileImageURL();
     
     public String getDateString();
+    
+    public Date getDate();
     
     public boolean isRetweet();
     
@@ -26,8 +33,6 @@ public interface TweetInfo {
     public default boolean isSaved() {
         return false;
     }
-    
-    public long getStatusId();
 
     public int getNumReplies(); 
     
@@ -35,10 +40,10 @@ public interface TweetInfo {
     
     public int getNumLikes();
     
-    public long getId();
-    
     default String getStatusUrl() {
-        String url= "https://twitter.com/" + this.getHandle() + "/status/" + this.getId();
+        String url= "https://twitter.com/" + this.getHandle() + "/status/" + this.getStatusId();
         return url;
     }
+    
+    public void update();
 }

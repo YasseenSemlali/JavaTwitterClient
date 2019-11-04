@@ -51,12 +51,11 @@ public class SendTweetController {
     	
         this.errMsg.setText("");
         try{
-        	String appendMsg = this.retweetOf.isBlank() ? "" : (" " + this.retweetOf);
+            String appendMsg = this.retweetOf.isBlank() ? "" : (" " + this.retweetOf);
             StatusUpdate  tweet = new StatusUpdate(this.sendTweetBean.getTweet() + appendMsg);
             
-            if(this.inReplyTo != -1) {
-                tweet.setInReplyToStatusId(inReplyTo);
-            }
+            
+            tweet.setInReplyToStatusId(inReplyTo);
             
             this.tweetSender.sendTweet(tweet);
             this.sendTweetBean.setTweet("");

@@ -1,5 +1,7 @@
 package com.dawsoncollege.twitterclient.business;
 
+import java.util.Date;
+
 /** Retrieves a tweet's info from the values it was instantiated with
  *
  * @author Yasseen
@@ -10,7 +12,7 @@ public class TweetInfoGeneric implements TweetInfo {
     private final String handle;
     private final String text;
     private final String profieImageURL;
-    private final String dateString;
+    private Date date;
     private final boolean isRetweet;
     private final boolean isLikedByUser;
     private final boolean isRetweetedByUser;
@@ -19,18 +21,17 @@ public class TweetInfoGeneric implements TweetInfo {
     private final int numReplies;
     private final int numRetweets;
     private final int numLikes;
-    private final long id;
 
     public TweetInfoGeneric(TweetInfo info) {
-        this(info.getName(), info.getText(), info.getProfileImageURL(), info.getHandle(), info.getDateString(), info.isRetweet(), info.isLikedByUser(), info.isRetweetedByUser(), info.isFollowingUser(), info.getStatusId(), info.getNumReplies(), info.getNumRetweets(), info.getNumLikes(), info.getId());
+        this(info.getName(), info.getText(), info.getProfileImageURL(), info.getHandle(), info.getDate(), info.isRetweet(), info.isLikedByUser(), info.isRetweetedByUser(), info.isFollowingUser(), info.getStatusId(), info.getNumReplies(), info.getNumRetweets(), info.getNumLikes());
     }
     
-    public TweetInfoGeneric(String name, String text, String profieImageURL, String handle, String dateString, boolean isRetweet, boolean isLikedByUser, boolean isRetweetedByUser, boolean isFollowingUser, long statusId, int numReplies, int numRetweets, int numLikes, long id) {
+    public TweetInfoGeneric(String name, String text, String profieImageURL, String handle, Date date, boolean isRetweet, boolean isLikedByUser, boolean isRetweetedByUser, boolean isFollowingUser, long statusId, int numReplies, int numRetweets, int numLikes) {
         this.name = name;
         this.text = text;
         this.profieImageURL = profieImageURL;
         this.handle = handle;
-        this.dateString = dateString;
+        this.date = date;
         this.isRetweet = isRetweet;
         this.isLikedByUser = isLikedByUser;
         this.isRetweetedByUser = isRetweetedByUser;
@@ -39,7 +40,6 @@ public class TweetInfoGeneric implements TweetInfo {
         this.numReplies = numReplies;
         this.numRetweets = numRetweets;
         this.numLikes = numLikes;
-        this.id = id;
     }
 
     @Override
@@ -64,7 +64,12 @@ public class TweetInfoGeneric implements TweetInfo {
 
     @Override
     public String getDateString() {
-        return this.dateString;
+        return this.date.toString();
+    }
+
+    @Override
+    public Date getDate() {
+        return this.date;
     }
 
     @Override
@@ -103,13 +108,13 @@ public class TweetInfoGeneric implements TweetInfo {
     }
 
     @Override
-    public long getId() {
-        return this.id;
+    public boolean isFollowingUser() {
+        return this.isFollowingUser;
     }
 
     @Override
-    public boolean isFollowingUser() {
-        return this.isFollowingUser;
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
