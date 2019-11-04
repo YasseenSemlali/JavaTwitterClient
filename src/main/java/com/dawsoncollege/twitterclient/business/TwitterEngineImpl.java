@@ -27,7 +27,7 @@ public class TwitterEngineImpl implements TwitterEngine {
         LOG.debug("getTimeLine | page: " + page);
 
         Twitter twitter = TwitterFactory.getSingleton();
-
+        
         Paging paging = new Paging();
         paging.setCount(TwitterConstants.TWEETS_PER_UPDATE);
         paging.setPage(page);
@@ -154,5 +154,12 @@ public class TwitterEngineImpl implements TwitterEngine {
         Twitter twitter = TwitterFactory.getSingleton();
         
         twitter.destroyFriendship(handle);
+    }
+
+    @Override
+    public Status getStatus(long id) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        
+        return twitter.showStatus(id);
     }
 }

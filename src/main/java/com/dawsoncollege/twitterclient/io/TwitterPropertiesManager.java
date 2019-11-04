@@ -23,19 +23,25 @@ import org.slf4j.LoggerFactory;
  */
 public class TwitterPropertiesManager {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TwitterPropertiesManager.class);
-
+    private final static String propertiesFileName = "twitter4j.properties";
+    
     private final String propertiesDir;
     
     public TwitterPropertiesManager(String propertiesDir) {
-        this.propertiesDir = propertiesDir;
+        if(propertiesDir == null || propertiesDir.isBlank()) {
+            this.propertiesDir = "";
+        } else {
+            this.propertiesDir = propertiesDir + "/";
+        }
     }
     
     /** Validates the twitter4j.properties file
      * @return Whether or not the twitter4j.properties file is there and valid
      */
     public boolean hasCredentials() {
+        System.out.println(this.propertiesDir+"/" + propertiesFileName);
         Properties prop = new Properties();
-        try (InputStream propFileStream = new FileInputStream(this.propertiesDir);){
+        try (InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);){
                prop.load(propFileStream);
                
                return(
@@ -70,7 +76,7 @@ public class TwitterPropertiesManager {
         {   
             // Add properties to the prop object
             // Not using prop.store because twitter4j doesn't support comments
-            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir);){
+            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir+"/" + propertiesFileName);){
 
             	propFileStream.write(("oauth.consumerKey="+ consumerKey + "\n").getBytes());
             	propFileStream.write(("oauth.consumerSecret="+ consumerSecretKey + "\n").getBytes());

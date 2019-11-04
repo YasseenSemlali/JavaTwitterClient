@@ -1,16 +1,14 @@
 package com.dawsoncollege.twitterclient.controller;
 
 import com.dawsoncollege.twitterclient.business.TweetInfo;
-import com.dawsoncollege.twitterclient.business.TweetInfo;
 import com.dawsoncollege.twitterclient.business.TwitterEngine;
 import com.dawsoncollege.twitterclient.business.TwitterEngineImpl;
+import com.dawsoncollege.twitterclient.sql.TweetDAOImpl;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,9 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.slf4j.LoggerFactory;
-import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 
 public class TweetController {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TweetController.class);
@@ -102,6 +98,9 @@ public class TweetController {
             
             alert.showAndWait();
         }
+        
+        this.info.update();
+        this.updateContents();
     }
 
     @FXML
@@ -110,8 +109,26 @@ public class TweetController {
     }
 
     @FXML
-    void saveTweet(ActionEvent event) {   
-    
+    void saveTweet(ActionEvent event) {     
+        LOG.info("EVENT: saveTweet " + this.info.getStatusId());  
+        
+        TweetDAOImpl tweetDAO = new TweetDAOImpl();
+        try{
+            if(tweetDAO.isSaved(info)) {
+                tweetDAO.unsaveTweet(info);
+            } else {
+                tweetDAO.saveTweet(info);
+            }
+        } catch (SQLException e) {
+            LOG.error("Error saving tweet", e);
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(resources.getString("err_saving_tweet"));
+            
+            alert.showAndWait();
+        }
+        
+        this.updateContents();
     }
     
     @FXML
@@ -134,6 +151,9 @@ public class TweetController {
             
             alert.showAndWait();
         }
+        
+        this.info.update();
+        this.updateContents();
     }
 
     @FXML
@@ -154,6 +174,9 @@ public class TweetController {
             
             alert.showAndWait();
         }
+        
+        this.info.update();
+        this.updateContents();
     }
 
     @FXML
@@ -174,6 +197,9 @@ public class TweetController {
         }
         
         this.showSendTweet(this.info.getStatusId(), "");
+        
+        this.info.update();
+        this.updateContents();
     }
     
     @FXML
@@ -262,7 +288,9 @@ public class TweetController {
             this.followBtn.setText(resources.getString("follow"));
         }
         
-        if(this.info.isSaved()) {
+        TweetDAOImpl tweetDAO = new TweetDAOImpl();
+        
+        if(tweetDAO.isSaved(info)) {
             this.saveTweetBtn.setText(resources.getString("unsave"));
         } else {
             this.saveTweetBtn.setText(resources.getString("save"));

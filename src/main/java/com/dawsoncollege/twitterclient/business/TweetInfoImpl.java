@@ -5,6 +5,8 @@
  */
 package com.dawsoncollege.twitterclient.business;
 
+import java.util.Date;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Query;
@@ -20,7 +22,7 @@ import twitter4j.TwitterFactory;
 public class TweetInfoImpl implements TweetInfo{
     private final static Logger LOG = LoggerFactory.getLogger(TweetInfoImpl.class);
 
-    private final Status status;
+    private Status status;
     
     public TweetInfoImpl(Status status) {
         this.status = status;
@@ -49,6 +51,11 @@ public class TweetInfoImpl implements TweetInfo{
     @Override
     public String getDateString() {
         return this.status.getCreatedAt().toString();
+    }
+
+    @Override
+    public Date getDate() {
+        return this.status.getCreatedAt();
     }
     
     @Override
@@ -94,11 +101,6 @@ public class TweetInfoImpl implements TweetInfo{
     public int getNumLikes() {
         return this.status.getFavoriteCount();
     }
-    
-    @Override
-    public long getId() {
-        return this.status.getId();
-    }
 
     @Override
     public boolean isFollowingUser() {
@@ -109,6 +111,16 @@ public class TweetInfoImpl implements TweetInfo{
         } catch(TwitterException e) {
             LOG.debug("isFollowingUser error, returning false");
             return false;
+        }
+    }
+
+    @Override
+    public void update() {
+        TwitterEngine engine = new TwitterEngineImpl();
+        try {
+            this.status = engine.getStatus(this.status.getId());
+        } catch (TwitterException e) {
+            LOG.error("Could retrieve updated status, leaving it as is", e);
         }
     }
 }
