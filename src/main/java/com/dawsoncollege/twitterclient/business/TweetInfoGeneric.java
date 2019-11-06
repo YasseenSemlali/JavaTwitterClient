@@ -23,10 +23,11 @@ public class TweetInfoGeneric implements TweetInfo {
     private final int numLikes;
 
     public TweetInfoGeneric(TweetInfo info) {
-        this(info.getName(), info.getText(), info.getProfileImageURL(), info.getHandle(), info.getDate(), info.isRetweet(), info.isLikedByUser(), info.isRetweetedByUser(), info.isFollowingUser(), info.getStatusId(), info.getNumReplies(), info.getNumRetweets(), info.getNumLikes());
+        this(info.getStatusId(), info.getName(), info.getHandle(), info.getText(), info.getProfileImageURL(), info.getDate(), info.isRetweet(), info.isLikedByUser(), info.isRetweetedByUser(), info.isFollowingUser(), info.getNumReplies(), info.getNumRetweets(), info.getNumLikes());
     }
     
-    public TweetInfoGeneric(String name, String text, String profieImageURL, String handle, Date date, boolean isRetweet, boolean isLikedByUser, boolean isRetweetedByUser, boolean isFollowingUser, long statusId, int numReplies, int numRetweets, int numLikes) {
+    public TweetInfoGeneric(long statusId, String name, String handle, String text, String profieImageURL, Date date, boolean isRetweet, boolean isLikedByUser, boolean isRetweetedByUser, boolean isFollowingUser, int numReplies, int numRetweets, int numLikes) {
+        this.statusId = statusId;
         this.name = name;
         this.text = text;
         this.profieImageURL = profieImageURL;
@@ -36,7 +37,6 @@ public class TweetInfoGeneric implements TweetInfo {
         this.isLikedByUser = isLikedByUser;
         this.isRetweetedByUser = isRetweetedByUser;
         this.isFollowingUser = isFollowingUser;
-        this.statusId = statusId;
         this.numReplies = numReplies;
         this.numRetweets = numRetweets;
         this.numLikes = numLikes;

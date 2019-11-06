@@ -17,7 +17,7 @@ import twitter4j.TwitterException;
  *
  * @author Yasseen
  */
-public class TimelineImpl implements Timeline{
+public class TimelineImpl implements Timeline{  
     private final static Logger LOG = LoggerFactory.getLogger(TimelineImpl.class);
 
     private final TwitterEngine engine;
