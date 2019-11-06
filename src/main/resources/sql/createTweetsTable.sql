@@ -11,6 +11,7 @@ CREATE TABLE tweets (
   isRetweet BOOLEAN NOT NULL default false,
   isLikedByUser BOOLEAN NOT NULL default false,
   isRetweetedByUser BOOLEAN NOT NULL default false,
+  isFollowingUser BOOLEAN NOT NULL default false,
   numReplies int NOT NULL default 0,
   numRetweets int NOT NULL default 0,
   numLikes int NOT NULL default 0,

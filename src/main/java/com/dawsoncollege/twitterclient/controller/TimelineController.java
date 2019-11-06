@@ -1,5 +1,6 @@
 package com.dawsoncollege.twitterclient.controller;
 
+import com.dawsoncollege.twitterclient.business.DatabaseTimeline;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -65,7 +66,11 @@ public class TimelineController {
 
     public void updateTimeline() {
         if (this.timeline == null) {
-            this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
+            if(timelineType == TimelineType.DATABASE) {
+                 this.timeline = new DatabaseTimeline(this.timelineView.getItems());
+            } else {
+                this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
+            }
         }
 
         try {

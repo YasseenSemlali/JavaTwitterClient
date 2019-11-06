@@ -1,12 +1,15 @@
 package com.dawsoncollege.twitterclient.sql;
 
 import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TweetInfoGeneric;
+import com.dawsoncollege.twitterclient.business.TwitterConstants;
 import com.dawsoncollege.twitterclient.io.SQLPropertiesManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Yasseen
  */
-public class TweetDAOImpl {
+public class TweetDAOImpl implements TweetDAO {
 
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TweetDAOImpl.class);
 
@@ -28,6 +31,7 @@ public class TweetDAOImpl {
         return DriverManager.getConnection(this.propertiesManager.getConnectionString(), this.propertiesManager.getUsername(), this.propertiesManager.getPassword());
     }
 
+    @Override
     public boolean isSaved(TweetInfo info) {
         String query = "SELECT count(*) from tweets WHERE statusId = ?";
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
@@ -46,11 +50,12 @@ public class TweetDAOImpl {
         return false;
     }
 
-    public int saveTweet(TweetInfo info) throws SQLException{
+    @Override
+    public int saveTweet(TweetInfo info) throws SQLException {
         SQLPropertiesManager propManager = new SQLPropertiesManager();
         String query = "INSERT INTO tweets(statusId, name, handle, text, profileImageURL, date, isRetweet, isLikedByUser, isRetweetedByUser, numReplies, numRetweets, numLikes) "
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
-        
+
         int result = 0;
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
@@ -66,44 +71,67 @@ public class TweetDAOImpl {
             ps.setInt(10, info.getNumReplies());
             ps.setInt(11, info.getNumRetweets());
             ps.setInt(12, info.getNumLikes());
-            
+
             result = ps.executeUpdate();
 
-        } 
-        
+        }
+
         return result;
     }
-    
-    public int unsaveTweet(TweetInfo info) throws SQLException{
+
+    @Override
+    public int unsaveTweet(TweetInfo info) throws SQLException {
         SQLPropertiesManager propManager = new SQLPropertiesManager();
         String query = "DELETE FROM tweets WHERE statusId = ?";
-        
+
         int result = 0;
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
             ps.setLong(1, info.getStatusId());
-            
+
             result = ps.executeUpdate();
-        } 
-        
+        }
+
         return result;
     }
-    
-    public List<TweetInfo> getTweets() {
-         String query = "SELECT count(*) from tweets ORDER BY date";
+
+    @Override
+    public List<TweetInfo> getTweets(int page) {
+        String query = "SELECT statusId, name, handle, text, profileImageURL, date, isRetweet, isLikedByUser, isRetweetedByUser, isFollowingUser, numReplies, numRetweets, numLikes from tweets "
+                + "ORDER BY date LIMIT ? OFFSET ?";
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
-            //ps.setLong(1, info.getStatusId());
-
+            ps.setInt(1, TwitterConstants.TWEETS_PER_UPDATE);
+            ps.setInt(2, (page - 1) * TwitterConstants.TWEETS_PER_UPDATE);
+            
             try ( ResultSet resultSet = ps.executeQuery()) {
-                if (resultSet.next()) {
+                List<TweetInfo> tweets = new ArrayList<TweetInfo>();
+                while (resultSet.next()) {
+                    TweetInfo tweetInfo = new TweetInfoGeneric(
+                            resultSet.getLong("statusId"),
+                            resultSet.getString("name"),
+                            resultSet.getString("handle"),
+                            resultSet.getString("text"),
+                            resultSet.getString("profileImageURL"),
+                            resultSet.getDate("date"),
+                            resultSet.getBoolean("isRetweet"),
+                            resultSet.getBoolean("isLikedByUser"),
+                            resultSet.getBoolean("isRetweetedByUser"),
+                            resultSet.getBoolean("isFollowingUser"),
+                            resultSet.getInt("numReplies"),
+                            resultSet.getInt("numRetweets"),
+                            resultSet.getInt("numLikes")
+                    );
                     
+                    tweets.add(tweetInfo);
                 }
+                
+                return tweets;
             }
         } catch (SQLException e) {
             LOG.error("getTweets error, returning empty list", e);
         }
-        
+
         return null;
     }
 }

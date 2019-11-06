@@ -9,10 +9,11 @@
    <center>
       <TabPane id="mainContent" fx:id="mainContent" prefHeight="600.0" prefWidth="800" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab fx:id="feedTab" text="Feed" />
-          <Tab fx:id="searchTab" text="Search" />
-          <Tab fx:id="dmTab" text="DM" />
-          <Tab fx:id="profileTab" text="Profile" />
+          <Tab fx:id="feedTab" />
+          <Tab fx:id="searchTab" />
+          <Tab fx:id="dmTab"/>
+          <Tab fx:id="profileTab" />
+          <Tab fx:id="dbTab"/>
         </tabs>
       </TabPane>
    </center>

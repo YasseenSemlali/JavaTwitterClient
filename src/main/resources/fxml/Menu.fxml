@@ -29,5 +29,10 @@
          <tooltip>
             <Tooltip text="%profile" />
          </tooltip></Button>
+      <Button id="db" mnemonicParsing="false" onAction="#onDBClick" prefHeight="60" prefWidth="60">
+         <tooltip>
+            <Tooltip text="%profile" />
+         </tooltip>
+      </Button>
    </children>
 </VBox>

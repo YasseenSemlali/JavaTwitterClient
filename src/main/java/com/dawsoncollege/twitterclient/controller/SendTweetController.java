@@ -57,6 +57,7 @@ public class SendTweetController {
             
             tweet.setInReplyToStatusId(inReplyTo);
             
+            
             this.tweetSender.sendTweet(tweet);
             this.sendTweetBean.setTweet("");
 
