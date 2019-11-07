@@ -73,7 +73,7 @@ public class AuthenticateController {
     @FXML
     void createProperties(ActionEvent event) {
     	LOG.debug("EVENT: createProperties");
-        TwitterPropertiesManager propManager = new TwitterPropertiesManager("twitter4j.properties");
+        TwitterPropertiesManager propManager = new TwitterPropertiesManager();
         
         String msg = propManager.createProperties(this.authenticateBean);
         if(msg.equals("")) {

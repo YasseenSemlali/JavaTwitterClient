@@ -27,6 +27,10 @@ public class TwitterPropertiesManager {
     
     private final String propertiesDir;
     
+    public TwitterPropertiesManager() {
+        this("");
+    }
+    
     public TwitterPropertiesManager(String propertiesDir) {
         if(propertiesDir == null || propertiesDir.isBlank()) {
             this.propertiesDir = "";
@@ -76,7 +80,7 @@ public class TwitterPropertiesManager {
         {   
             // Add properties to the prop object
             // Not using prop.store because twitter4j doesn't support comments
-            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir+"/" + propertiesFileName);){
+            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir + propertiesFileName);){
 
             	propFileStream.write(("oauth.consumerKey="+ consumerKey + "\n").getBytes());
             	propFileStream.write(("oauth.consumerSecret="+ consumerSecretKey + "\n").getBytes());
@@ -87,7 +91,7 @@ public class TwitterPropertiesManager {
                //prop.store(propFileStream, "Twitter Properties");
             }  catch (IOException ex) {
                 errorMsg = "Could not write twitter4j.properties file";
-                LOG.warn(ex.getMessage());
+                LOG.error(ex.getMessage(), ex);
             }
             
         } else {

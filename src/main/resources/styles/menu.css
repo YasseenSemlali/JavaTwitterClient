@@ -37,3 +37,7 @@ Button:hover {
 #profile {
   -fx-background-image: url("../Images/avatar.png");
 }
+
+#db {
+  -fx-background-image: url("../Images/database.png");
+}

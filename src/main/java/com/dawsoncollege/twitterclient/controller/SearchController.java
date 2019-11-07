@@ -76,7 +76,7 @@ public class SearchController {
             this.content.setCenter(content);
             this.timelineController = controller;
         } catch (IOException ex) {
-            LOG.error("initTimeline error", ex);
+            LOG.error("initTimeline error in SearchController", ex);
             Platform.exit();
         }
     }
