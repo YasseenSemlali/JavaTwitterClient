@@ -67,7 +67,7 @@ public class TweetDAOImpl implements TweetDAO {
             ps.setString(3, info.getHandle());
             ps.setString(4, info.getText());
             ps.setString(5, info.getProfileImageURL());
-            ps.setDate(6, new java.sql.Date(info.getDate().getTime()));
+            ps.setTimestamp(6, new java.sql.Timestamp(info.getDate().getTime()));
             ps.setBoolean(7, info.isRetweet());
             ps.setBoolean(8, info.isLikedByUser());
             ps.setBoolean(9, info.isRetweetedByUser());
@@ -124,7 +124,7 @@ public class TweetDAOImpl implements TweetDAO {
                             resultSet.getString("handle"),
                             resultSet.getString("text"),
                             resultSet.getString("profileImageURL"),
-                            resultSet.getDate("date"),
+                            resultSet.getTimestamp("date"),
                             resultSet.getBoolean("isRetweet"),
                             resultSet.getBoolean("isLikedByUser"),
                             resultSet.getBoolean("isRetweetedByUser"),
