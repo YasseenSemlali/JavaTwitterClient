@@ -27,6 +27,7 @@ public class DatabaseTimeline implements Timeline{
     public void updateTimeline() throws TwitterException {
     	LOG.info("Getting page "+ this.page + " of db timeline ");
         
+        
         TweetDAO dao = new TweetDAOImpl();
         List<TweetInfo> timeline = dao.getTweets(page);
         timeline.forEach((info) -> {

@@ -4,6 +4,7 @@ import com.dawsoncollege.twitterclient.business.TweetInfo;
 import com.dawsoncollege.twitterclient.business.TweetInfoGeneric;
 import com.dawsoncollege.twitterclient.business.TwitterConstants;
 import com.dawsoncollege.twitterclient.io.SQLPropertiesManager;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +28,7 @@ public class TweetDAOImpl implements TweetDAO {
         this.propertiesManager = new SQLPropertiesManager("");
     }
 
-    private Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException, IOException {
         return DriverManager.getConnection(this.propertiesManager.getConnectionString(), this.propertiesManager.getUsername(), this.propertiesManager.getPassword());
     }
 
@@ -44,7 +45,9 @@ public class TweetDAOImpl implements TweetDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error("isSaved error, returning false", e);
+            LOG.error("isSaved sql error, returning false", e);
+        } catch(IOException e) {
+            LOG.error("isSaved IO error, returning false", e);
         }
 
         return false;
@@ -74,6 +77,10 @@ public class TweetDAOImpl implements TweetDAO {
 
             result = ps.executeUpdate();
 
+        } catch (SQLException e) {
+            LOG.error("saveTweet error, returning empty list", e);
+        } catch(IOException e) {
+            LOG.error("saveTweet IO error, returning false", e);
         }
 
         return result;
@@ -90,6 +97,10 @@ public class TweetDAOImpl implements TweetDAO {
             ps.setLong(1, info.getStatusId());
 
             result = ps.executeUpdate();
+        }catch (SQLException e) {
+            LOG.error("unsaveTweet error, returning empty list", e);
+        }catch(IOException e) {
+            LOG.error("unsaveTweet IO error, returning false", e);
         }
 
         return result;
@@ -130,8 +141,10 @@ public class TweetDAOImpl implements TweetDAO {
             }
         } catch (SQLException e) {
             LOG.error("getTweets error, returning empty list", e);
+        }catch(IOException e) {
+            LOG.error("getTweets IO error, returning false", e);
         }
 
-        return null;
+        return new ArrayList<TweetInfo>();
     }
 }

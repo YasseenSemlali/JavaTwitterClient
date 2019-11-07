@@ -76,7 +76,7 @@ public class TimelineController {
         try {
             this.timeline.updateTimeline();
         } catch (TwitterException e) {
-            LOG.error("Error retrieving timeline", e);
+            LOG.error("Error retrieving " + this.timelineType  + " timeline", e);
         }
     }
 }
