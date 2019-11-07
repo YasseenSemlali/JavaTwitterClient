@@ -7,7 +7,7 @@ CREATE TABLE tweets (
   handle varchar(15) NOT NULL,
   text varchar(500) NOT NULL default '',
   profileImageURL varchar(75) NOT NULL,
-  date DATE NOT NULL,
+  date TIMESTAMP NOT NULL,
   isRetweet BOOLEAN NOT NULL default false,
   isLikedByUser BOOLEAN NOT NULL default false,
   isRetweetedByUser BOOLEAN NOT NULL default false,
