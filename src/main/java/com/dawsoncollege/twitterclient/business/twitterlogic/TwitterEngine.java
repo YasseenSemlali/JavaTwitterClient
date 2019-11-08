@@ -77,17 +77,46 @@ public interface TwitterEngine {
      */
      public String getUserHandle() throws TwitterException;
      
-     public void likeTweet(long statusId) throws TwitterException;
+     /** Likes a tweet
+     * @param statusId The statusId of the tweet to like
+     * @throws TwitterException
+     */
+    public void likeTweet(long statusId) throws TwitterException;
      
-     public void unlikeTweet(long statusId) throws TwitterException;
+     /** Unlikes a tweet
+     * @param statusId The statusId of the tweet to unlike
+     * @throws TwitterException
+     */
+    public void unlikeTweet(long statusId) throws TwitterException;
      
-     public void retweetTweet(long statusId) throws TwitterException;
+     /** Retweets a tweet
+     * @param statusId The statusId of the tweet to retweet
+     * @throws TwitterException
+     */
+    public void retweetTweet(long statusId) throws TwitterException;
      
-     public void unretweetTweet(long statusId) throws TwitterException;
+     /** Unretweets a tweet
+     * @param statusId The statusId of the tweet to unretweet
+     * @throws TwitterException
+     */
+    public void unretweetTweet(long statusId) throws TwitterException;
      
-     public Status getStatus(long id)  throws TwitterException;
+     /** Retrieves a status
+     * @param statusId The statusId of the tweet to to retrieve
+     * @return
+     * @throws TwitterException
+     */
+    public Status getStatus(long statusId)  throws TwitterException;
      
-     public void followUser(String handle) throws TwitterException;
+     /** Follows a user
+     * @param handle The handle of the user to follow
+     * @throws TwitterException
+     */
+    public void followUser(String handle) throws TwitterException;
      
-     public void unfollowUser(String handle) throws TwitterException;
+     /**Unfollows a user
+     * @param handle  The handle of the user to unfollow
+     * @throws TwitterException
+     */
+    public void unfollowUser(String handle) throws TwitterException;
 }

@@ -106,7 +106,7 @@ public class TwitterEngineImpl implements TwitterEngine {
 
     public boolean isFollowingUser(String source, String target) throws TwitterException {
         LOG.debug("isFollowingUser: " + source + " following " + target);
-
+        
         Twitter twitter = TwitterFactory.getSingleton();
         return twitter.showFriendship(source, target).isSourceFollowingTarget();
 
