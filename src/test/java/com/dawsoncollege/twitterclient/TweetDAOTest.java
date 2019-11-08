@@ -18,6 +18,7 @@ import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -48,11 +49,10 @@ public class TweetDAOTest {
 
     private final static Logger LOG = LoggerFactory.getLogger(TweetDAOTest.class);
     private static final String propDir = "src/test/resources";
-        private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 
     @RunWith(Parameterized.class)
     public static class TweetInfoTests {
-
 
         @Parameters
         public static Collection<Object[]> data() throws ParseException {
@@ -83,81 +83,97 @@ public class TweetDAOTest {
         public void testContents() {
             TweetDAO dao = new TweetDAOImpl(propDir);
             TweetInfo retrievedInfo = dao.getTweets(1).get(index);
-            
+
+            assertEquals(retrievedInfo, this.info);
+        }
+
+        @Test
+        public void testGetTweet() {
+            TweetDAO dao = new TweetDAOImpl(propDir);
+            TweetInfo retrievedInfo = dao.getTweet(info.getStatusId());
+
             assertEquals(retrievedInfo, this.info);
         }
     }
 
     public static class NonParametrizedTests {
+
         @Before
         public void setUp() {
             runSqlScript("sql/createTweetsTestTable.sql");
         }
-        
+
         @Test
         public void testGetTweets() {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             List<TweetInfo> results = dao.getTweets(1);
             assertEquals(7, results.size());
         }
-        
+
+        public void testGetTweetsInvalidPage() {
+            TweetDAO dao = new TweetDAOImpl(propDir);
+
+            List<TweetInfo> results = dao.getTweets(0);
+            assertEquals(0, results.size());
+        }
+
         @Test
         public void testGetTweetsWithTweetsPerPage() {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
-            List<TweetInfo> results = dao.getTweets(1,2);
+
+            List<TweetInfo> results = dao.getTweets(1, 2);
             assertEquals(2, results.size());
         }
-        
+
         @Test
         public void testIsSaved() throws ParseException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             TweetInfo info = new TweetInfoGeneric(0, "Ken Fogel", "@static", "First tweet in DB", "url.com", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0);
             boolean isSaved = dao.isSaved(0);
             assertTrue(isSaved);
         }
-        
+
         @Test
         public void testIsNotSaves() throws ParseException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-           
+
             boolean isSaved = dao.isSaved(8);
             assertFalse(isSaved);
         }
-        
+
         @Test
         public void testSaveTweet() throws ParseException, SQLException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             dao.saveTweet(new TweetInfoGeneric(7, "", "", "", "", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0));
             assertEquals(8, dao.getTweets(1).size());
         }
-        
+
         @Test
         public void testSaveInvalidTweet() throws ParseException, SQLException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             dao.saveTweet(new TweetInfoGeneric(0, "", "", "", "", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0));
             assertEquals(7, dao.getTweets(1).size());
         }
-        
+
         @Test
         public void testUnsaveTweet() throws SQLException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             dao.unsaveTweet(0);
-            
+
             assertEquals(6, dao.getTweets(1).size());
         }
-        
+
         @Test
         public void testNonexistentTweet() throws SQLException {
             TweetDAO dao = new TweetDAOImpl(propDir);
-            
+
             dao.unsaveTweet(0);
-            
+
             assertEquals(6, dao.getTweets(1).size());
         }
     }

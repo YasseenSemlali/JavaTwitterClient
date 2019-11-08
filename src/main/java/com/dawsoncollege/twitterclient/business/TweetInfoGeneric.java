@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import com.dawsoncollege.twitterclient.sql.TweetDAO;
+import com.dawsoncollege.twitterclient.sql.TweetDAOImpl;
+
 /** Retrieves a tweet's info from the values it was instantiated with
  *
  * @author Yasseen
@@ -89,19 +92,19 @@ public class TweetInfoGeneric implements TweetInfo {
         return true;
     }
 
-    private final long statusId;
-    private final String name;
-    private final String handle;
-    private final String text;
-    private final String profieImageURL;
+    private  long statusId;
+    private  String name;
+    private String handle;
+    private  String text;
+    private  String profieImageURL;
     private Date date;
-    private final boolean isRetweet;
-    private final boolean isLikedByUser;
-    private final boolean isRetweetedByUser;
-    private final boolean isFollowingUser;
-    private final int numReplies;
-    private final int numRetweets;
-    private final int numLikes;
+    private  boolean isRetweet;
+    private  boolean isLikedByUser;
+    private  boolean isRetweetedByUser;
+    private  boolean isFollowingUser;
+    private  int numReplies;
+    private  int numRetweets;
+    private  int numLikes;
 
     public TweetInfoGeneric(TweetInfo info) {
         this(info.getStatusId(), info.getName(), info.getHandle(), info.getText(), info.getProfileImageURL(), info.getDate(), info.isRetweet(), info.isLikedByUser(), info.isRetweetedByUser(), info.isFollowingUser(), info.getNumReplies(), info.getNumRetweets(), info.getNumLikes());
@@ -195,7 +198,7 @@ public class TweetInfoGeneric implements TweetInfo {
 
     @Override
     public void update() {
-        // Do nothing
+        //Do nothing, since database info doesn't change when a tweet does
     }
 
 }

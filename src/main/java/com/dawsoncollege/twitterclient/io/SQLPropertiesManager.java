@@ -21,10 +21,16 @@ public class SQLPropertiesManager {
 
     private final String propertiesDir;
 
+    /** Create an {@link SQLPropertiesManager} that get info from the sql.properties file in the root directory
+     * 
+     */
     public SQLPropertiesManager() {
         this("");
     }
-
+    
+    /** Create an {@link SQLPropertiesManager} that get info from the sql.properties file in the specified directory
+     * 
+     */
     public SQLPropertiesManager(String propertiesDir) {
         if (propertiesDir == null || propertiesDir.isBlank()) {
             this.propertiesDir = "";
@@ -32,7 +38,9 @@ public class SQLPropertiesManager {
             this.propertiesDir = propertiesDir + "/";
         }
     }
-
+    /** Validates the sql.properties file
+     * @return Whether or not the sql.properties file is there and valid
+     */
     public boolean hasCredentials() {
         Properties prop = new Properties();
         try ( InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);) {
@@ -47,6 +55,9 @@ public class SQLPropertiesManager {
         return false;
     }
 
+    /** Returns the URL from the sql.properties file
+     * @throws IOException
+     */
     public String getUrl() throws IOException {
         try ( InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);) {
             Properties prop = new Properties();
@@ -60,6 +71,10 @@ public class SQLPropertiesManager {
         }
     }
 
+
+    /** Returns the URL from the sql.properties file
+     * @throws IOException
+     */
     public String getUsername() throws IOException {
         try ( InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);) {
             Properties prop = new Properties();
@@ -73,6 +88,10 @@ public class SQLPropertiesManager {
         }
     }
 
+
+    /** Returns the URL from the sql.properties file
+     * @throws IOException
+     */
     public String getPassword() throws IOException {
         try ( InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);) {
             Properties prop = new Properties();
@@ -85,7 +104,10 @@ public class SQLPropertiesManager {
             }
         }
     }
-
+    
+    /** Create the sql.properties file based on user input
+     * @param bean The SQLCredentialsBean that contains form data
+     */
     public String createProperties(SQLCredentialsBean bean) {
         String errorMsg = "";
         
