@@ -1,13 +1,14 @@
 package com.dawsoncollege.twitterclient.controller;
 
 import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngineImpl;
+import com.dawsoncollege.twitterclient.sql.TweetDAOImpl;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,15 +19,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.slf4j.LoggerFactory;
-import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 
 public class TweetController {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TweetController.class);
@@ -61,24 +61,87 @@ public class TweetController {
 
     @FXML
     private MenuButton retweetBtn;
+
+    @FXML
+    private MenuItem retweetNoReplyBtn;
     
     @FXML
     private Text likes;
 
     @FXML
     private Button likeBtn;
+    
+    @FXML
+    private MenuItem followBtn;
 
+    @FXML
+    private MenuItem sendDMBtn;
+
+    @FXML
+    private MenuItem saveTweetBtn;
+
+    @FXML
+    void follow(ActionEvent event) {   
+        LOG.info("EVENT: (un)follow " + this.info.getHandle());
+        TwitterEngine engine = new TwitterEngineImpl();
+        
+        try {
+            if(this.info.isFollowingUser()) {
+                engine.unfollowUser(info.getHandle());
+            } else {
+                engine.followUser(info.getHandle());
+            }
+        } catch (TwitterException ex) {
+            LOG.error("Error following user", ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(resources.getString("err_following_user"));
+            
+            alert.showAndWait();
+        }
+        
+        this.info.update();
+        this.updateContents();
+    }
+
+    @FXML
+    void sendDM(ActionEvent event) {   
+    
+    }
+
+    @FXML
+    void saveTweet(ActionEvent event) {     
+        LOG.info("EVENT: saveTweet " + this.info.getStatusId());  
+        
+        TweetDAOImpl tweetDAO = new TweetDAOImpl();
+        try{
+            if(tweetDAO.isSaved(info.getStatusId())) {
+                tweetDAO.unsaveTweet(info.getStatusId());
+            } else {
+                tweetDAO.saveTweet(info);
+            }
+        } catch (SQLException e) {
+            LOG.error("Error saving tweet", e);
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(resources.getString("err_saving_tweet"));
+            
+            alert.showAndWait();
+        }
+        
+        this.updateContents();
+    }
+    
     @FXML
     void like(ActionEvent event) {     
         LOG.info("EVENT: like " + this.info.getStatusUrl());
         
         try {
-            Twitter twitter = TwitterFactory.getSingleton();
+            TwitterEngine engine = new TwitterEngineImpl();
             
             if(this.info.isLikedByUser()) {
-                twitter.destroyFavorite(this.info.getStatusId());
+                engine.unlikeTweet(this.info.getStatusId());
             } else {
-                twitter.createFavorite(this.info.getStatusId());
+                engine.likeTweet(this.info.getStatusId());
             }
                 
         } catch (TwitterException ex) {
@@ -88,17 +151,20 @@ public class TweetController {
             
             alert.showAndWait();
         }
+        
+        this.info.update();
+        this.updateContents();
     }
 
     @FXML
     void retweet(ActionEvent event) {        
         LOG.info("EVENT: retweet " + this.info.getStatusUrl());
         try {
-            Twitter twitter = TwitterFactory.getSingleton();
+            TwitterEngine engine = new TwitterEngineImpl();
             if(this.info.isRetweetedByUser()) {
-                twitter.unRetweetStatus(this.info.getStatusId());
+                engine.unretweetTweet(this.info.getStatusId());
             } else {
-                twitter.retweetStatus(this.info.getStatusId());
+                engine.retweetTweet(this.info.getStatusId());
             }
         } catch (TwitterException ex) {
             LOG.error("Error retweeting tweet", ex);
@@ -108,6 +174,9 @@ public class TweetController {
             
             alert.showAndWait();
         }
+        
+        this.info.update();
+        this.updateContents();
     }
 
     @FXML
@@ -128,6 +197,9 @@ public class TweetController {
         }
         
         this.showSendTweet(this.info.getStatusId(), "");
+        
+        this.info.update();
+        this.updateContents();
     }
     
     @FXML
@@ -141,7 +213,11 @@ public class TweetController {
         assert retweets != null : "fx:id=\"retweets\" was not injected: check your FXML file 'Tweet.fxml'.";
         assert likes != null : "fx:id=\"likes\" was not injected: check your FXML file 'Tweet.fxml'.";
         assert likeBtn != null : "fx:id=\"likeBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
-        assert retweetBtn != null : "fx:id=\"likeBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
+        assert retweetBtn != null : "fx:id=\"retweetBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
+        assert retweetNoReplyBtn != null : "fx:id=\"retweetNoReplyBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
+        assert followBtn != null : "fx:id=\"followBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
+        assert sendDMBtn != null : "fx:id=\"sendDMBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
+        assert saveTweetBtn != null : "fx:id=\"saveTweetBtn\" was not injected: check your FXML file 'Tweet.fxml'.";
     }
     
     /** Shows a dialog that allows the user to send a tweet
@@ -187,7 +263,7 @@ public class TweetController {
         this.handle.setText(info.getHandle());
         this.date.setText(info.getDateString());
         this.tweetContents.setText(info.getText());
-        this.image.setImage(new Image(info.getProfieImageURL()));
+        this.image.setImage(new Image(info.getProfileImageURL()));
         this.replies.setText(info.getNumReplies()+"");
         this.retweets.setText(info.getNumRetweets()+"");
         this.likes.setText(this.info.getNumLikes()+"");
@@ -197,10 +273,27 @@ public class TweetController {
         } else {
             this.likeBtn.setStyle("-fx-background-image: url(\"Images/like.png\");");
         }
+        
         if(this.info.isRetweetedByUser()) {
             this.retweetBtn.setStyle("-fx-background-image: url(\"Images/retweet_full.png\");");
+            this.retweetNoReplyBtn.setText(resources.getString("unretweet"));
         } else {
             this.retweetBtn.setStyle("-fx-background-image: url(\"Images/retweet.png\");");
+            this.retweetNoReplyBtn.setText(resources.getString("retweet"));
+        }
+        
+        if(this.info.isFollowingUser()) {
+            this.followBtn.setText(resources.getString("unfollow"));
+        } else {
+            this.followBtn.setText(resources.getString("follow"));
+        }
+        
+        TweetDAOImpl tweetDAO = new TweetDAOImpl();
+        
+        if(tweetDAO.isSaved(info.getStatusId())) {
+            this.saveTweetBtn.setText(resources.getString("unsave"));
+        } else {
+            this.saveTweetBtn.setText(resources.getString("save"));
         }
     }
 }

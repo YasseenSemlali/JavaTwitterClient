@@ -11,36 +11,47 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="760.0" stylesheets="@../styles/tweet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawsoncollege.twitterclient.controller.TweetController">
    <children>
-      <HBox prefHeight="80.0" prefWidth="760.0">
-         <children>
-            <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <VBox prefHeight="70.0" prefWidth="690.0">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
+      <MenuButton mnemonicParsing="false" text="MenuButton">
+        <items>
+          <MenuItem fx:id="followBtn" mnemonicParsing="false" onAction="#follow" />
+            <MenuItem fx:id="sendDMBtn" mnemonicParsing="false" onAction="#sendDM" text="%send_dm" />
+            <MenuItem fx:id="saveTweetBtn" mnemonicParsing="false" onAction="#saveTweet" />
+        </items>
+         <graphic>
+            <HBox prefHeight="80.0" prefWidth="760.0">
                <children>
-                  <HBox prefWidth="390.0">
+                  <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox prefHeight="70.0" prefWidth="690.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
                      <children>
-                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin></Text>
-                        <Text fx:id="handle" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin></Text>
-                        <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <HBox prefWidth="390.0">
+                           <children>
+                              <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text fx:id="handle" strokeType="OUTSIDE" strokeWidth="0.0">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text fx:id="date" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <Text fx:id="tweetContents" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="626.0" />
                      </children>
-                  </HBox>
-                  <Text fx:id="tweetContents" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="626.0" />
+                  </VBox>
                </children>
-            </VBox>
-         </children>
-      </HBox>
+            </HBox>
+         </graphic>
+      </MenuButton>
       <HBox prefWidth="760.0" spacing="50.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="20.0">
@@ -57,7 +68,7 @@
                <children>
                   <MenuButton id="retweet" fx:id="retweetBtn" minHeight="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" HBox.hgrow="ALWAYS">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#retweet" text="%retweet" />
+                      <MenuItem fx:id="retweetNoReplyBtn" mnemonicParsing="false" onAction="#retweet" />
                       <MenuItem mnemonicParsing="false" onAction="#retweetWithReplies" text="%retweet_with_replies" />
                     </items>
                      <HBox.margin>

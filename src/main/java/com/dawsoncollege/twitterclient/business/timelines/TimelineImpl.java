@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngineImpl;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,7 +20,7 @@ import twitter4j.TwitterException;
  *
  * @author Yasseen
  */
-public class TimelineImpl implements Timeline{
+public class TimelineImpl implements Timeline{  
     private final static Logger LOG = LoggerFactory.getLogger(TimelineImpl.class);
 
     private final TwitterEngine engine;
@@ -26,7 +29,7 @@ public class TimelineImpl implements Timeline{
     private final TimelineType timelineType;
     
     public TimelineImpl(ObservableList<TweetInfo> list, TimelineType timelineType) {
-        this.engine = new TwitterEngine();
+        this.engine = new TwitterEngineImpl();
         this.list = list;
         this.page = 1;
         this.timelineType = timelineType;

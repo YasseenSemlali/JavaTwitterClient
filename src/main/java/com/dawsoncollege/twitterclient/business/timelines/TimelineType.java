@@ -1,5 +1,5 @@
 
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
 /** 
  * Types of timelines that can be retrieved
@@ -21,5 +21,9 @@ public enum TimelineType {
     /**
      * All posts that retweet the user
      */
-    RETWEETS_OF_ME
+    RETWEETS_OF_ME,
+    /**
+     * Posts that are saved to a database
+     */
+    DATABASE
 }

@@ -1,15 +1,16 @@
 package com.dawsoncollege.twitterclient.controller;
 
+import com.dawsoncollege.twitterclient.business.timelines.DatabaseTimeline;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dawsoncollege.twitterclient.business.Timeline;
-import com.dawsoncollege.twitterclient.business.TimelineCell;
-import com.dawsoncollege.twitterclient.business.TimelineImpl;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.Timeline;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineCell;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineImpl;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
 
 import javafx.collections.FXCollections;
@@ -65,13 +66,17 @@ public class TimelineController {
 
     public void updateTimeline() {
         if (this.timeline == null) {
-            this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
+            if(timelineType == TimelineType.DATABASE) {
+                 this.timeline = new DatabaseTimeline(this.timelineView.getItems());
+            } else {
+                this.timeline = new TimelineImpl(this.timelineView.getItems(), this.timelineType);
+            }
         }
 
         try {
             this.timeline.updateTimeline();
         } catch (TwitterException e) {
-            LOG.error("Error retrieving timeline", e);
+            LOG.error("Error retrieving " + this.timelineType  + " timeline", e);
         }
     }
 }

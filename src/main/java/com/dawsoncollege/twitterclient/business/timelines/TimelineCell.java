@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TwitterConstants;
 import com.dawsoncollege.twitterclient.controller.TweetController;
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
 public class TimelineCell extends ListCell<TweetInfo>{
     private final static Logger LOG = LoggerFactory.getLogger(TimelineCell.class);
 
+    
     @Override
     protected void updateItem(TweetInfo item, boolean empty) {
         super.updateItem(item, empty);
@@ -40,8 +43,7 @@ public class TimelineCell extends ListCell<TweetInfo>{
             setGraphic(getTimelineCell(item));
         }
     }
-
-    /** Generates a JavaFX node based on TweetInfo
+   /** Generates a JavaFX node based on TweetInfo
      *
      * @param info  
      * @return The JavaFX node

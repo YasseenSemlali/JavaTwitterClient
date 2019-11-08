@@ -1,15 +1,9 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
 
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
 import twitter4j.DirectMessageList;
 import twitter4j.TwitterException;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -21,7 +15,7 @@ public class DirectMessagesImpl implements DirectMessages{
     private DirectMessageList currentDirectMessageList;
     
     public DirectMessagesImpl() throws TwitterException {        
-        this.engine = new TwitterEngine();        
+        this.engine = new TwitterEngineImpl();        
         this.currentDirectMessageList = engine.getDMs();
         
     }

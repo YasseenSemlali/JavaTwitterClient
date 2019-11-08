@@ -1,10 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TweetInfoImpl;
+import com.dawsoncollege.twitterclient.business.TwitterConstants;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -21,20 +20,16 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 /**
- * Contains all methods that interface with Twitter directly
+ *
  * @author Yasseen
  */
-public class TwitterEngine {
-    private final static Logger LOG = LoggerFactory.getLogger(TwitterEngine.class);
+public class TwitterEngineImpl implements TwitterEngine {
 
-    /**  Gets a timeline from twitter
-     * @param page The page of the timeline
-     * @param timelineType The type of timeline to retrieve
-     * @throws TwitterException
-     */
+    private final static Logger LOG = LoggerFactory.getLogger(TwitterEngineImpl.class);
+
     public List<TweetInfo> getTimeline(int page, TimelineType timelineType) throws TwitterException {
         LOG.debug("getTimeLine | page: " + page);
-        
+
         Twitter twitter = TwitterFactory.getSingleton();
         
         Paging paging = new Paging();
@@ -60,31 +55,21 @@ public class TwitterEngine {
 
         LOG.debug("Retrieved " + statuses.size() + " tweets");
 
-        return statuses.stream().map(s -> new TweetInfo(s)).collect(Collectors.toList());
+        return statuses.stream().map(s -> new TweetInfoImpl(s)).collect(Collectors.toList());
     }
-    
-     /** Executes a query
-     * @param query The query to execute
-     * @return The query results
-     * @throws TwitterException
-     */
-    public  QueryResult searchTweets(Query query) throws TwitterException {
+
+    public QueryResult searchTweets(Query query) throws TwitterException {
         LOG.debug("searchtweets: " + query.getQuery());
 
         Twitter twitter = TwitterFactory.getSingleton();
 
         QueryResult result = twitter.search(query);
-        
+
         LOG.debug("Retrieved " + result.getCount() + " tweets");
-        
+
         return result;
     }
 
-    /** Sends a tweet
-     * @param tweet
-     * @return The tweet's text
-     * @throws TwitterException
-     */
     public String sendTweet(StatusUpdate tweet) throws TwitterException {
         LOG.debug("sendTweet: " + tweet.getStatus());
 
@@ -93,12 +78,6 @@ public class TwitterEngine {
         return status.getText();
     }
 
-    /** Sends a direct message
-     * @param recipientName Recipient's twitter handle
-     * @param msg The message to send
-     * @return The message's text
-     * @throws TwitterException
-     */
     public String sendDM(String recipientName, String msg) throws TwitterException {
         LOG.debug("sendDM: " + msg);
 
@@ -106,32 +85,85 @@ public class TwitterEngine {
         DirectMessage message = twitter.sendDirectMessage(recipientName, msg);
         return message.getText();
     }
-    
-    /** Gets a list of direct messages, starting from the cursor
-     * @param cursor
-     * @return
-     * @throws TwitterException
-     */
+
     public DirectMessageList getDMs(String cursor) throws TwitterException {
-        LOG.debug("getDM: "  + cursor);
-        
+        LOG.debug("getDM: " + cursor);
+
         Twitter twitter = TwitterFactory.getSingleton();
         DirectMessageList messages = twitter.getDirectMessages(TwitterConstants.DIRECT_MESSAGES_PER_UPDATE, cursor);
-        
+
         return messages;
     }
-    
-    /** Gets a list of direct messages, starting from the most recent
-     * @return
-     * @throws TwitterException
-     */
+
     public DirectMessageList getDMs() throws TwitterException {
         LOG.debug("getDM: ");
-        
+
         Twitter twitter = TwitterFactory.getSingleton();
         DirectMessageList messages = twitter.getDirectMessages(TwitterConstants.DIRECT_MESSAGES_PER_UPDATE);
-        
+
         return messages;
     }
-    
+
+    public boolean isFollowingUser(String source, String target) throws TwitterException {
+        LOG.debug("isFollowingUser: " + source + " following " + target);
+        
+        Twitter twitter = TwitterFactory.getSingleton();
+        return twitter.showFriendship(source, target).isSourceFollowingTarget();
+
+    }
+
+    public String getUserHandle() throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+
+        return twitter.getScreenName();
+    }
+
+    @Override
+    public void likeTweet(long statusId) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+
+        twitter.createFavorite(statusId);
+
+    }
+
+    @Override
+    public void unlikeTweet(long statusId) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+
+        twitter.destroyFavorite(statusId);
+    }
+
+    @Override
+    public void retweetTweet(long statusId) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+
+        twitter.retweetStatus(statusId);
+    }
+
+    @Override
+    public void unretweetTweet(long statusId) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        twitter.unRetweetStatus(statusId);
+    }
+
+    @Override
+    public void followUser(String handle) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        
+        twitter.createFriendship(handle);
+    }
+
+    @Override
+    public void unfollowUser(String handle) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        
+        twitter.destroyFriendship(handle);
+    }
+
+    @Override
+    public Status getStatus(long id) throws TwitterException {
+        Twitter twitter = TwitterFactory.getSingleton();
+        
+        return twitter.showStatus(id);
+    }
 }

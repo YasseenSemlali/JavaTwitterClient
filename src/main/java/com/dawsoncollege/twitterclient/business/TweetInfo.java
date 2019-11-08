@@ -1,90 +1,52 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dawsoncollege.twitterclient.business;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import twitter4j.Query;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import java.util.Date;
 
 /**
  * Wrapper class for the {@link Status} object
  * @author Yasseen
  */
-public class TweetInfo {
-    private final static Logger LOG = LoggerFactory.getLogger(TweetInfo.class);
+public interface TweetInfo {
+    
+    public long getStatusId();
+    
+    public String getName();
+    
+    public String getHandle();
 
-    private final Status status;
-    
-    public TweetInfo(Status status) {
-        this.status = status;
-    }
-    
-    public String getName() {
-        return this.status.getUser().getName();
-    }
+    public String getText();
 
-    public String getText(){
-        return this.status.getText();
-    }
-
-    public String getProfieImageURL(){
-        return this.status.getUser().getProfileImageURL();
-    }
+    public String getProfileImageURL();
     
-    public String getHandle() {
-      return this.status.getUser().getScreenName();
-    }
+    public String getDateString();
     
-    public String getDateString() {
-        return this.status.getCreatedAt().toString();
-    }
+    public Date getDate();
     
-    public boolean isRetweet() {
-        return this.status.isRetweet();
-    }
+    public boolean isRetweet();
     
-    public boolean isLikedByUser() {
-        return this.status.isFavorited();
-    }
+    public boolean isLikedByUser();
     
-    public boolean isRetweetedByUser() {
-        return this.status.isRetweeted();
-    }
+    public boolean isRetweetedByUser();
     
-    public long getStatusId() {
-        return this.status.getId();
+    public boolean isFollowingUser();
+    
+    public default boolean isSaved() {
+        return false;
     }
 
-    public int getNumReplies() {
-        Twitter twitter = TwitterFactory.getSingleton();
-        
-        try{
-        Query query = new Query("to:" + this.status.getUser().getScreenName());
-        query.setSinceId(this.status.getId());
-        return twitter.search(query).getTweets().size();
-        } catch(TwitterException e) {
-            LOG.debug("getNumTweets error, returning 0");
-            return 0;
-        }
-    }
+    public int getNumReplies(); 
     
-    public int getNumRetweets() {
-        return this.status.getRetweetCount();
-    }
+    public int getNumRetweets();
     
-    public int getNumLikes() {
-        return this.status.getFavoriteCount();
-    }
+    public int getNumLikes();
     
-    public String getStatusUrl() {
-        String url= "https://twitter.com/" + status.getUser().getScreenName() + "/status/" + status.getId();
+    default String getStatusUrl() {
+        String url= "https://twitter.com/" + this.getHandle() + "/status/" + this.getStatusId();
         return url;
     }
+    
+    /**
+     * Will update the TweetInfo from the network. Only applicable for implementations that use the internet.
+     */
+    public void update();
 }

@@ -1,7 +1,7 @@
 package com.dawsoncollege.twitterclient.controller;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -110,7 +110,7 @@ public class ProfileController {
             controller.updateTimeline();
             
         } catch (IOException ex) {
-            LOG.error("initTimeline error", ex);
+            LOG.error("initTimeline error in ProfileController", ex);
             Platform.exit();
         }
     }
@@ -130,7 +130,7 @@ public class ProfileController {
             try {
             	 controller.search(query);
             } catch(TwitterException e) {
-            	 LOG.error("Error retweeting retweets", e);
+            	 LOG.error("Error displaying retweets in ProfileController", e);
             }
            
             

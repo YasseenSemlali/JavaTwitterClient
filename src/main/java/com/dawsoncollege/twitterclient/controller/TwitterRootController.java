@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import org.slf4j.LoggerFactory;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -27,6 +27,7 @@ public class TwitterRootController {
     public static int SEARCH_INDEX = 1;
     public static int DM_INDEX = 2;
     public static int PROFILE_INDEX = 3;
+    public static int DB_INDEX = 4;
     
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -49,6 +50,9 @@ public class TwitterRootController {
     @FXML // fx:id="profileTab"
     private Tab profileTab; // Value injected by FXMLLoader
 
+    @FXML // fx:id="dbTab"
+    private Tab dbTab; // Value injected by FXMLLoader
+
     @FXML // fx:id="menuPane"
     private AnchorPane menuPane; // Value injected by FXMLLoader
 
@@ -59,6 +63,7 @@ public class TwitterRootController {
         assert searchTab != null : "fx:id=\"searchTab\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
         assert dmTab != null : "fx:id=\"dmTab\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
         assert profileTab != null : "fx:id=\"profileTab\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
+        assert dbTab != null : "fx:id=\"dbTab\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
         assert menuPane != null : "fx:id=\"menuPane\" was not injected: check your FXML file 'TwitterRoot.fxml'.";
 
         this.initMenu();
@@ -70,6 +75,8 @@ public class TwitterRootController {
         this.initTab(this.dmTab, "/fxml/DM.fxml");
         
         this.initTab(this.profileTab, "/fxml/Profile.fxml");
+        
+        this.initTab(this.dbTab, "/fxml/DatabaseTimeline.fxml");
     }
     
     /** Initializes the sidebar

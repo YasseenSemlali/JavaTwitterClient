@@ -21,21 +21,37 @@ import org.slf4j.LoggerFactory;
  *
  * @author Yasseen
  */
-public class PropertiesManager {
-    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(PropertiesManager.class);
-
+public class TwitterPropertiesManager {
+    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TwitterPropertiesManager.class);
+    private final static String propertiesFileName = "twitter4j.properties";
+    
     private final String propertiesDir;
     
-    public PropertiesManager(String propertiesDir) {
-        this.propertiesDir = propertiesDir;
+    /** Create an {@link TwitterPropertiesManager} that get info from the twitter4j.properties file in the root directory
+     * 
+     */
+    public TwitterPropertiesManager() {
+        this("");
+    }
+    
+    /** Create an {@link TwitterPropertiesManager} that get info from the twitter4j.properties file in the specified directory
+     * 
+     */
+    public TwitterPropertiesManager(String propertiesDir) {
+        if(propertiesDir == null || propertiesDir.isBlank()) {
+            this.propertiesDir = "";
+        } else {
+            this.propertiesDir = propertiesDir + "/";
+        }
     }
     
     /** Validates the twitter4j.properties file
      * @return Whether or not the twitter4j.properties file is there and valid
      */
     public boolean hasCredentials() {
+        System.out.println(this.propertiesDir+"/" + propertiesFileName);
         Properties prop = new Properties();
-        try (InputStream propFileStream = new FileInputStream(this.propertiesDir);){
+        try (InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);){
                prop.load(propFileStream);
                
                return(
@@ -63,14 +79,14 @@ public class PropertiesManager {
         String accessSecretKey = bean.getAccessKey();
         String accessKey = bean.getAccessSecretKey();
         
-        if(!(consumerKey == null || consumerKey.isBlank() ||
+        if(!(consumerKey == null || consumerKey.isBlank()||
                 consumerSecretKey == null || consumerSecretKey.isBlank() ||
                 accessSecretKey == null || accessSecretKey.isBlank() ||
                 accessKey == null || accessKey.isBlank() )) 
         {   
             // Add properties to the prop object
             // Not using prop.store because twitter4j doesn't support comments
-            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir);){
+            try (OutputStream propFileStream = new FileOutputStream(this.propertiesDir + propertiesFileName);){
 
             	propFileStream.write(("oauth.consumerKey="+ consumerKey + "\n").getBytes());
             	propFileStream.write(("oauth.consumerSecret="+ consumerSecretKey + "\n").getBytes());
@@ -81,7 +97,7 @@ public class PropertiesManager {
                //prop.store(propFileStream, "Twitter Properties");
             }  catch (IOException ex) {
                 errorMsg = "Could not write twitter4j.properties file";
-                LOG.warn(ex.getMessage());
+                LOG.error(ex.getMessage(), ex);
             }
             
         } else {

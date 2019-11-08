@@ -1,6 +1,6 @@
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
