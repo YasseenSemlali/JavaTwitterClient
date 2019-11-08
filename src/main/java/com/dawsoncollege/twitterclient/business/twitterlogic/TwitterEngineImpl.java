@@ -1,5 +1,9 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TweetInfoImpl;
+import com.dawsoncollege.twitterclient.business.TwitterConstants;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;

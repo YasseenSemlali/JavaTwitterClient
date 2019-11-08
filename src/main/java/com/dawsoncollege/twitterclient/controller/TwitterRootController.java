@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import org.slf4j.LoggerFactory;
 
 import com.dawsoncollege.twitterclient.NewFXMain;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

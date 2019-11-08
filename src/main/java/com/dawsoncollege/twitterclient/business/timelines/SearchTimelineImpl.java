@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.TweetInfoImpl;
+import com.dawsoncollege.twitterclient.business.TwitterConstants;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngineImpl;
 import com.dawsoncollege.twitterclient.controller.SearchController;
 import static java.util.Collections.list;
 import java.util.List;

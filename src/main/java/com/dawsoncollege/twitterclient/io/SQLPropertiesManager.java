@@ -47,7 +47,7 @@ public class SQLPropertiesManager {
         return false;
     }
 
-    public String getConnectionString() throws IOException {
+    public String getUrl() throws IOException {
         try ( InputStream propFileStream = new FileInputStream(this.propertiesDir + propertiesFileName);) {
             Properties prop = new Properties();
             prop.load(propFileStream);

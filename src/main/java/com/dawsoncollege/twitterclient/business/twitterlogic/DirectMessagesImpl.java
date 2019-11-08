@@ -1,7 +1,7 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
 
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
 import twitter4j.DirectMessageList;
 import twitter4j.TwitterException;
 

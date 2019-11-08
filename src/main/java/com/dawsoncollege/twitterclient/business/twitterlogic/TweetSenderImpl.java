@@ -1,4 +1,4 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

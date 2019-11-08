@@ -25,19 +25,23 @@ public class TweetDAOImpl implements TweetDAO {
     private final SQLPropertiesManager propertiesManager;
 
     public TweetDAOImpl() {
-        this.propertiesManager = new SQLPropertiesManager("");
+        this.propertiesManager = new SQLPropertiesManager();
+    }
+    
+    public TweetDAOImpl(String propertiesURL) {
+        this.propertiesManager = new SQLPropertiesManager(propertiesURL);
     }
 
     private Connection getConnection() throws SQLException, IOException {
-        return DriverManager.getConnection(this.propertiesManager.getConnectionString(), this.propertiesManager.getUsername(), this.propertiesManager.getPassword());
+        return DriverManager.getConnection(this.propertiesManager.getUrl(), this.propertiesManager.getUsername(), this.propertiesManager.getPassword());
     }
 
     @Override
-    public boolean isSaved(TweetInfo info) {
+    public boolean isSaved(long statusId) {
         String query = "SELECT count(*) from tweets WHERE statusId = ?";
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
-            ps.setLong(1, info.getStatusId());
+            ps.setLong(1, statusId);
 
             try ( ResultSet resultSet = ps.executeQuery()) {
                 if (resultSet.next()) {
@@ -80,21 +84,21 @@ public class TweetDAOImpl implements TweetDAO {
         } catch (SQLException e) {
             LOG.error("saveTweet error, returning empty list", e);
         } catch(IOException e) {
-            LOG.error("saveTweet IO error, returning false", e);
+            LOG.error("saveTweet IO error, returning 0", e);
         }
 
         return result;
     }
 
     @Override
-    public int unsaveTweet(TweetInfo info) throws SQLException {
+    public int unsaveTweet(long statusId) throws SQLException {
         SQLPropertiesManager propManager = new SQLPropertiesManager();
         String query = "DELETE FROM tweets WHERE statusId = ?";
 
         int result = 0;
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
-            ps.setLong(1, info.getStatusId());
+            ps.setLong(1, statusId);
 
             result = ps.executeUpdate();
         }catch (SQLException e) {
@@ -105,15 +109,22 @@ public class TweetDAOImpl implements TweetDAO {
 
         return result;
     }
+    
+    @Override
+    public List<TweetInfo> getTweets(int page){
+        return this.getTweets(page, -1);
+    }
 
     @Override
-    public List<TweetInfo> getTweets(int page) {
+    public List<TweetInfo> getTweets(int page, int tweetsPerPage) {
         String query = "SELECT statusId, name, handle, text, profileImageURL, date, isRetweet, isLikedByUser, isRetweetedByUser, isFollowingUser, numReplies, numRetweets, numLikes from tweets "
-                + "ORDER BY date LIMIT ? OFFSET ?";
+                + "ORDER BY date, statusid DESC LIMIT ? OFFSET ?";
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
-            ps.setInt(1, TwitterConstants.TWEETS_PER_UPDATE);
-            ps.setInt(2, (page - 1) * TwitterConstants.TWEETS_PER_UPDATE);
+            int numTweets = tweetsPerPage == -1 ? TwitterConstants.TWEETS_PER_UPDATE : tweetsPerPage;
+            
+            ps.setInt(1, numTweets);
+            ps.setInt(2, (page - 1) * numTweets);
             
             try ( ResultSet resultSet = ps.executeQuery()) {
                 List<TweetInfo> tweets = new ArrayList<TweetInfo>();

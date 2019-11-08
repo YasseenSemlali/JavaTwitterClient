@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import java.util.List;
 import twitter4j.DirectMessageList;
 import twitter4j.Query;

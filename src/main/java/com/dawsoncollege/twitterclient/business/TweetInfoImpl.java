@@ -5,6 +5,8 @@
  */
 package com.dawsoncollege.twitterclient.business;
 
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngineImpl;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
 import java.util.Date;
 import java.util.logging.Level;
 import org.slf4j.Logger;

@@ -1,5 +1,5 @@
 
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
 import twitter4j.Query;
 import twitter4j.TwitterException;
