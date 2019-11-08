@@ -27,10 +27,16 @@ public class TwitterPropertiesManager {
     
     private final String propertiesDir;
     
+    /** Create an {@link TwitterPropertiesManager} that get info from the twitter4j.properties file in the root directory
+     * 
+     */
     public TwitterPropertiesManager() {
         this("");
     }
     
+    /** Create an {@link TwitterPropertiesManager} that get info from the twitter4j.properties file in the specified directory
+     * 
+     */
     public TwitterPropertiesManager(String propertiesDir) {
         if(propertiesDir == null || propertiesDir.isBlank()) {
             this.propertiesDir = "";
@@ -73,7 +79,7 @@ public class TwitterPropertiesManager {
         String accessSecretKey = bean.getAccessKey();
         String accessKey = bean.getAccessSecretKey();
         
-        if(!(consumerKey == null || consumerKey.isBlank() ||
+        if(!(consumerKey == null || consumerKey.isBlank()||
                 consumerSecretKey == null || consumerSecretKey.isBlank() ||
                 accessSecretKey == null || accessSecretKey.isBlank() ||
                 accessKey == null || accessKey.isBlank() )) 

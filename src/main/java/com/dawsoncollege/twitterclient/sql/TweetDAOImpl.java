@@ -27,7 +27,7 @@ public class TweetDAOImpl implements TweetDAO {
     public TweetDAOImpl() {
         this.propertiesManager = new SQLPropertiesManager();
     }
-    
+
     public TweetDAOImpl(String propertiesURL) {
         this.propertiesManager = new SQLPropertiesManager(propertiesURL);
     }
@@ -50,7 +50,7 @@ public class TweetDAOImpl implements TweetDAO {
             }
         } catch (SQLException e) {
             LOG.error("isSaved sql error, returning false", e);
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOG.error("isSaved IO error, returning false", e);
         }
 
@@ -83,7 +83,7 @@ public class TweetDAOImpl implements TweetDAO {
 
         } catch (SQLException e) {
             LOG.error("saveTweet error, returning empty list", e);
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOG.error("saveTweet IO error, returning 0", e);
         }
 
@@ -101,17 +101,17 @@ public class TweetDAOImpl implements TweetDAO {
             ps.setLong(1, statusId);
 
             result = ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             LOG.error("unsaveTweet error, returning empty list", e);
-        }catch(IOException e) {
+        } catch (IOException e) {
             LOG.error("unsaveTweet IO error, returning false", e);
         }
 
         return result;
     }
-    
+
     @Override
-    public List<TweetInfo> getTweets(int page){
+    public List<TweetInfo> getTweets(int page) {
         return this.getTweets(page, -1);
     }
 
@@ -122,10 +122,10 @@ public class TweetDAOImpl implements TweetDAO {
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
             int numTweets = tweetsPerPage == -1 ? TwitterConstants.TWEETS_PER_UPDATE : tweetsPerPage;
-            
+
             ps.setInt(1, numTweets);
             ps.setInt(2, (page - 1) * numTweets);
-            
+
             try ( ResultSet resultSet = ps.executeQuery()) {
                 List<TweetInfo> tweets = new ArrayList<TweetInfo>();
                 while (resultSet.next()) {
@@ -144,18 +144,55 @@ public class TweetDAOImpl implements TweetDAO {
                             resultSet.getInt("numRetweets"),
                             resultSet.getInt("numLikes")
                     );
-                    
+
                     tweets.add(tweetInfo);
                 }
-                
+
                 return tweets;
             }
         } catch (SQLException e) {
             LOG.error("getTweets error, returning empty list", e);
-        }catch(IOException e) {
+        } catch (IOException e) {
             LOG.error("getTweets IO error, returning false", e);
         }
 
         return new ArrayList<TweetInfo>();
+    }
+
+    @Override
+    public TweetInfo getTweet(long statusId) {
+        String query = "SELECT statusId, name, handle, text, profileImageURL, date, isRetweet, isLikedByUser, isRetweetedByUser, isFollowingUser, numReplies, numRetweets, numLikes from tweets "
+                + "WHERE statusId = ? ";
+        try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
+
+            ps.setLong(1, statusId);
+
+            try ( ResultSet resultSet = ps.executeQuery()) {
+                resultSet.next();
+                TweetInfo tweetInfo = new TweetInfoGeneric(
+                        resultSet.getLong("statusId"),
+                        resultSet.getString("name"),
+                        resultSet.getString("handle"),
+                        resultSet.getString("text"),
+                        resultSet.getString("profileImageURL"),
+                        resultSet.getTimestamp("date"),
+                        resultSet.getBoolean("isRetweet"),
+                        resultSet.getBoolean("isLikedByUser"),
+                        resultSet.getBoolean("isRetweetedByUser"),
+                        resultSet.getBoolean("isFollowingUser"),
+                        resultSet.getInt("numReplies"),
+                        resultSet.getInt("numRetweets"),
+                        resultSet.getInt("numLikes")
+                );
+
+                return tweetInfo;
+            }
+        } catch (SQLException e) {
+            LOG.error("getTweets error, returning empty list", e);
+        } catch (IOException e) {
+            LOG.error("getTweets IO error, returning false", e);
+        }
+
+        return null;
     }
 }

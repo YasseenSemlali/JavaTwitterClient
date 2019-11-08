@@ -45,5 +45,8 @@ public interface TweetInfo {
         return url;
     }
     
+    /**
+     * Will update the TweetInfo from the network. Only applicable for implementations that use the internet.
+     */
     public void update();
 }
