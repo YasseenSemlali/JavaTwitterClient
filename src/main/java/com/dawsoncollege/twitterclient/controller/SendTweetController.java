@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dawsoncollege.twitterclient.beans.SendTweetBean;
-import com.dawsoncollege.twitterclient.business.TweetSender;
-import com.dawsoncollege.twitterclient.business.TweetSenderImpl;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TweetSender;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TweetSenderImpl;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -51,12 +51,12 @@ public class SendTweetController {
     	
         this.errMsg.setText("");
         try{
-        	String appendMsg = this.retweetOf.isBlank() ? "" : (" " + this.retweetOf);
+            String appendMsg = this.retweetOf.isBlank() ? "" : (" " + this.retweetOf);
             StatusUpdate  tweet = new StatusUpdate(this.sendTweetBean.getTweet() + appendMsg);
             
-            if(this.inReplyTo != -1) {
-                tweet.setInReplyToStatusId(inReplyTo);
-            }
+            
+            tweet.setInReplyToStatusId(inReplyTo);
+            
             
             this.tweetSender.sendTweet(tweet);
             this.sendTweetBean.setTweet("");

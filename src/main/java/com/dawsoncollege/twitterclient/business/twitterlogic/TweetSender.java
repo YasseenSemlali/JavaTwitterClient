@@ -1,4 +1,4 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.twitterlogic;
 
 import twitter4j.StatusUpdate;
 import twitter4j.TwitterException;

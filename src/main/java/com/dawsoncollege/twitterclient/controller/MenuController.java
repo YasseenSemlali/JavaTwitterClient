@@ -43,6 +43,12 @@ public class MenuController {
         mainContent.getSelectionModel().select(TwitterRootController.PROFILE_INDEX);
     }
 
+    @FXML
+    void onDBClick(ActionEvent event) {
+    	LOG.debug("EVENT: onDBClick");
+        mainContent.getSelectionModel().select(TwitterRootController.DB_INDEX);
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
 

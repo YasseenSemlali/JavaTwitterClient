@@ -1,9 +1,10 @@
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.business.SearchTimeline;
-import com.dawsoncollege.twitterclient.business.SearchTimelineImpl;
-import com.dawsoncollege.twitterclient.business.TimelineCell;
-import com.dawsoncollege.twitterclient.business.TimelineImpl;
+import com.dawsoncollege.twitterclient.business.timelines.SearchTimeline;
+import com.dawsoncollege.twitterclient.business.timelines.SearchTimelineImpl;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineCell;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineImpl;
+import com.dawsoncollege.twitterclient.business.TweetInfo;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
 import java.net.URL;
 import java.util.ResourceBundle;

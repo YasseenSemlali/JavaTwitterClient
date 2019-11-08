@@ -14,9 +14,16 @@
         </action>
         <action>
             <actionName>CUSTOM-run no logging</actionName>
-            <displayName>run no logging</displayName>
+            <displayName>run no t4j logging</displayName>
             <properties>
                 <twitter4j.loggerFactory>twitter4j.NullLoggerFactory</twitter4j.loggerFactory>
             </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-test</actionName>
+            <displayName>test</displayName>
+            <goals>
+                <goal>test</goal>
+            </goals>
         </action>
     </actions>
