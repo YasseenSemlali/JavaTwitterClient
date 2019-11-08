@@ -57,12 +57,12 @@ public class TweetDAOTest {
         @Parameters
         public static Collection<Object[]> data() throws ParseException {
             return Arrays.asList(new Object[][]{
-                {new TweetInfoGeneric(0, "Ken Fogel", "@static", "First tweet in DB", "url.com", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0), 4},
-                {new TweetInfoGeneric(1, "Ken Fogel", "@static", "Second Tweet In DB", "url.com", dateFormat.parse("20191108100000"), true, true, true, true, 1, 2, 3), 5},
-                {new TweetInfoGeneric(2, "Yasseen Semlali", "@asdf", "Python <3", "example.com", dateFormat.parse("20200101000000"), true, false, true, false, 500, 8000, 9999), 6},
-                {new TweetInfoGeneric(3, "Okuyasu Nijimura", "@ZaHando", "Oi Josuke", "", dateFormat.parse("19990101000000"), false, true, false, false, 0, 3, 0), 2},
-                {new TweetInfoGeneric(4, "Dio Brando", "@ZaWarudo", "WRYYYYYYYY (1/2)", "roadroller.com", dateFormat.parse("19890101000000"), false, false, false, false, 0, 0, 0), 1},
-                {new TweetInfoGeneric(5, "Dio Brando", "@ZaWarudo", "YYYYYYYYYY (2/2)", "roadroller.com", dateFormat.parse("19890101000000"), false, false, false, false, 0, 0, 0), 0},
+                {new TweetInfoGeneric(0, "Ken Fogel", "@static", "First tweet in DB", "url.com", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0), 2},
+                {new TweetInfoGeneric(1, "Ken Fogel", "@static", "Second Tweet In DB", "url.com", dateFormat.parse("20191108100000"), true, true, true, true, 1, 2, 3), 1},
+                {new TweetInfoGeneric(2, "Yasseen Semlali", "@asdf", "Python <3", "example.com", dateFormat.parse("20200101000000"), true, false, true, false, 500, 8000, 9999), 0},
+                {new TweetInfoGeneric(3, "Okuyasu Nijimura", "@ZaHando", "Oi Josuke", "", dateFormat.parse("19990101000000"), false, true, false, false, 0, 3, 0), 4},
+                {new TweetInfoGeneric(4, "Dio Brando", "@ZaWarudo", "WRYYYYYYYY (1/2)", "roadroller.com", dateFormat.parse("19890101000000"), false, false, false, false, 0, 0, 0), 5},
+                {new TweetInfoGeneric(5, "Dio Brando", "@ZaWarudo", "YYYYYYYYYY (2/2)", "roadroller.com", dateFormat.parse("19890101000000"), false, false, false, false, 0, 0, 0), 6},
                 {new TweetInfoGeneric(6, "", "", "", "", dateFormat.parse("20191107000000"), false, false, false, false, 0, 0, 0), 3}
             });
         }
@@ -84,6 +84,9 @@ public class TweetDAOTest {
             TweetDAO dao = new TweetDAOImpl(propDir);
             TweetInfo retrievedInfo = dao.getTweets(1).get(index);
 
+            LOG.debug("Expected " + this.info);
+            LOG.debug("Actual   " + retrievedInfo);
+            
             assertEquals(retrievedInfo, this.info);
         }
 

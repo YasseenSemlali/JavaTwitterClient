@@ -118,7 +118,7 @@ public class TweetDAOImpl implements TweetDAO {
     @Override
     public List<TweetInfo> getTweets(int page, int tweetsPerPage) {
         String query = "SELECT statusId, name, handle, text, profileImageURL, date, isRetweet, isLikedByUser, isRetweetedByUser, isFollowingUser, numReplies, numRetweets, numLikes from tweets "
-                + "ORDER BY date, statusid DESC LIMIT ? OFFSET ?";
+                + "ORDER BY date DESC, statusid ASC LIMIT ? OFFSET ?";
         try ( Connection connection = this.getConnection();  PreparedStatement ps = connection.prepareStatement(query);) {
 
             int numTweets = tweetsPerPage == -1 ? TwitterConstants.TWEETS_PER_UPDATE : tweetsPerPage;
