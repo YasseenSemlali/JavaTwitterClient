@@ -1,5 +1,6 @@
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
+import com.dawsoncollege.twitterclient.business.TweetInfo;
 import com.dawsoncollege.twitterclient.sql.TweetDAO;
 import com.dawsoncollege.twitterclient.sql.TweetDAOImpl;
 import java.util.List;
@@ -26,7 +27,6 @@ public class DatabaseTimeline implements Timeline{
     @Override
     public void updateTimeline() throws TwitterException {
     	LOG.info("Getting page "+ this.page + " of db timeline ");
-        
         
         TweetDAO dao = new TweetDAOImpl();
         List<TweetInfo> timeline = dao.getTweets(page);

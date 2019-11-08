@@ -19,4 +19,11 @@
                 <twitter4j.loggerFactory>twitter4j.NullLoggerFactory</twitter4j.loggerFactory>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-test</actionName>
+            <displayName>test</displayName>
+            <goals>
+                <goal>test</goal>
+            </goals>
+        </action>
     </actions>

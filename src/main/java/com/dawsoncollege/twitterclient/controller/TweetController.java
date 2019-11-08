@@ -1,8 +1,8 @@
 package com.dawsoncollege.twitterclient.controller;
 
 import com.dawsoncollege.twitterclient.business.TweetInfo;
-import com.dawsoncollege.twitterclient.business.TwitterEngine;
-import com.dawsoncollege.twitterclient.business.TwitterEngineImpl;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngine;
+import com.dawsoncollege.twitterclient.business.twitterlogic.TwitterEngineImpl;
 import com.dawsoncollege.twitterclient.sql.TweetDAOImpl;
 import java.io.IOException;
 import java.net.URL;
@@ -114,8 +114,8 @@ public class TweetController {
         
         TweetDAOImpl tweetDAO = new TweetDAOImpl();
         try{
-            if(tweetDAO.isSaved(info)) {
-                tweetDAO.unsaveTweet(info);
+            if(tweetDAO.isSaved(info.getStatusId())) {
+                tweetDAO.unsaveTweet(info.getStatusId());
             } else {
                 tweetDAO.saveTweet(info);
             }
@@ -290,7 +290,7 @@ public class TweetController {
         
         TweetDAOImpl tweetDAO = new TweetDAOImpl();
         
-        if(tweetDAO.isSaved(info)) {
+        if(tweetDAO.isSaved(info.getStatusId())) {
             this.saveTweetBtn.setText(resources.getString("unsave"));
         } else {
             this.saveTweetBtn.setText(resources.getString("save"));

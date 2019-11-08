@@ -2,7 +2,7 @@ package com.dawsoncollege.twitterclient.controller;
 
 
 import com.dawsoncollege.twitterclient.NewFXMain;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import com.dawsoncollege.twitterclient.controller.TimelineController;
 import com.dawsoncollege.twitterclient.controller.TwitterRootController;
 import java.io.IOException;

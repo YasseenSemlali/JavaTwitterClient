@@ -1,16 +1,16 @@
 package com.dawsoncollege.twitterclient.controller;
 
-import com.dawsoncollege.twitterclient.business.DatabaseTimeline;
+import com.dawsoncollege.twitterclient.business.timelines.DatabaseTimeline;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dawsoncollege.twitterclient.business.Timeline;
-import com.dawsoncollege.twitterclient.business.TimelineCell;
-import com.dawsoncollege.twitterclient.business.TimelineImpl;
-import com.dawsoncollege.twitterclient.business.TimelineType;
+import com.dawsoncollege.twitterclient.business.timelines.Timeline;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineCell;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineImpl;
+import com.dawsoncollege.twitterclient.business.timelines.TimelineType;
 import com.dawsoncollege.twitterclient.business.TweetInfo;
 
 import javafx.collections.FXCollections;

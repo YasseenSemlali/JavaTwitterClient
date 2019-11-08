@@ -16,11 +16,13 @@ import java.util.List;
 public interface TweetDAO {
 
     List<TweetInfo> getTweets(int page);
+    
+    List<TweetInfo> getTweets(int page, int tweetsPerPage);
 
-    boolean isSaved(TweetInfo info);
+    boolean isSaved(long statusId);
 
     int saveTweet(TweetInfo info) throws SQLException;
 
-    int unsaveTweet(TweetInfo info) throws SQLException;
+    int unsaveTweet(long statusId) throws SQLException;
     
 }

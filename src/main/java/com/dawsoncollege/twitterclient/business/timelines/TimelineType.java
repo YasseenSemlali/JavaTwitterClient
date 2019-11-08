@@ -1,5 +1,5 @@
 
-package com.dawsoncollege.twitterclient.business;
+package com.dawsoncollege.twitterclient.business.timelines;
 
 /** 
  * Types of timelines that can be retrieved
